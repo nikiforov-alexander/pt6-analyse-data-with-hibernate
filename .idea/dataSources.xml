@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="876854584">
+    <data-source source="LOCAL" name="H2 - worldbank" uuid="4f3e90ad-a028-4110-a954-277f2e83f4d0">
+      <driver-ref>h2.unified</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.h2.Driver</jdbc-driver>
+      <jdbc-url>jdbc:h2:$PROJECT_DIR$/data/worldbank</jdbc-url>
+    </data-source>
+  </component>
+</project>

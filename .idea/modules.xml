@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pt6-analyse-data-with-hibernate.iml" filepath="$PROJECT_DIR$/.idea/modules/pt6-analyse-data-with-hibernate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pt6-analyse-data-with-hibernate_main.iml" filepath="$PROJECT_DIR$/.idea/modules/pt6-analyse-data-with-hibernate_main.iml" group="pt6-analyse-data-with-hibernate" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pt6-analyse-data-with-hibernate_test.iml" filepath="$PROJECT_DIR$/.idea/modules/pt6-analyse-data-with-hibernate_test.iml" group="pt6-analyse-data-with-hibernate" />
+    </modules>
+  </component>
+</project>
