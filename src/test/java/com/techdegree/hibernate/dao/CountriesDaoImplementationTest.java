@@ -22,6 +22,12 @@ public class CountriesDaoImplementationTest {
     private static SessionFactory mSessionFactory;
     // Dao with all CRUDs we test
     private CountriesDaoImplementation mCountriesDaoImplementation;
+    // Test country with ABC code
+    private Country mTestCountryWithAbcCode = new Country.CountryBuilder("ABC")
+                .withName("Country")
+                .withAdultLiteracyRate(1.0)
+                .withInternetUsers(1.0)
+                .build();
 
 //    @BeforeClass
 //    public static void setUpSessionFactory() {
@@ -56,15 +62,18 @@ public class CountriesDaoImplementationTest {
         mSessionFactory.close();
     }
 
-    @Test
-    public void findAllReturnsOneTestCountryWhenWeAddIt() throws Exception {
-        // Given database with one country
-        Country country = new CountryBuilder("DBC")
+    private void addTestCountryToDatabase() {
+        mTestCountryWithAbcCode = new CountryBuilder("ABC")
                 .withName("Country")
                 .withAdultLiteracyRate(1.0)
                 .withInternetUsers(1.0)
                 .build();
-        mCountriesDaoImplementation.add(country);
+       mCountriesDaoImplementation.add(mTestCountryWithAbcCode);
+    }
+    @Test
+    public void findAllReturnsOneTestCountryWhenWeAddIt() throws Exception {
+        // Given database with one country
+        addTestCountryToDatabase();
         // When we fetch all countries
         List<Country> listOfAllCountries =
                 mCountriesDaoImplementation.findAll();
@@ -75,16 +84,26 @@ public class CountriesDaoImplementationTest {
     @Test
     public void savingCountryReturnsCountryCode() throws Exception {
         // Given empty testing database and test country with code "ABC"
-        String countryCode = "ABC";
-        Country country = new CountryBuilder(countryCode)
+        Country testCountryWithAbcCode = new CountryBuilder("ABC")
                 .withName("Country")
                 .withAdultLiteracyRate(1.0)
                 .withInternetUsers(1.0)
                 .build();
         // When we add a country
-        String codeFromSave = mCountriesDaoImplementation.add(country);
+        String codeFromSave = mCountriesDaoImplementation
+                .add(testCountryWithAbcCode);
         // Then code of country should be returned
-        assertEquals(countryCode, codeFromSave);
+        assertEquals("ABC", codeFromSave);
     }
 
+    @Test
+    public void getCountryByCodeReturnsCorrectCountry() throws Exception {
+        // Given testing database with ABC country
+        addTestCountryToDatabase();
+        // When we try to find country by code
+        Country foundCountry = mCountriesDaoImplementation
+                .findCountryByCode("ABC");
+        // Then obtained country should be equal to our test country
+        assertEquals(mTestCountryWithAbcCode, foundCountry);
+    }
 }
