@@ -1,26 +1,26 @@
 package com.techdegree.hibernate.model;
 
 import javax.persistence.*;
-import javax.xml.stream.StreamFilter;
 
 @Entity
+@Table(name = "COUNTRY")
 public class Country {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int mId;
-    @Column
+    @Column(name = "CODE", columnDefinition = "VARCHAR(3)")
+    private String mCode;
+    @Column(name = "NAME", columnDefinition = "VARCHAR(32)")
     private String mName;
-    @Column
+    @Column(name = "INTERNETUSERS", columnDefinition = "DECIMAL(11,8)")
     private Double mInternetUsers;
-    @Column
+    @Column(name = "ADULTLITERACYRATE", columnDefinition = "DECIMAL(11,8)")
     private Double mAdultLiteracyRate;
 
-    public int getId() {
-        return mId;
+    public String getCode() {
+        return mCode;
     }
 
-    public void setId(int id) {
-        mId = id;
+    public void setCode(String code) {
+        this.mCode = code;
     }
 
     public String getName() {
@@ -28,7 +28,7 @@ public class Country {
     }
 
     public void setName(String name) {
-        mName = name;
+        this.mName = name;
     }
 
     public Double getInternetUsers() {
@@ -36,7 +36,7 @@ public class Country {
     }
 
     public void setInternetUsers(Double internetUsers) {
-        mInternetUsers = internetUsers;
+        this.mInternetUsers = internetUsers;
     }
 
     public Double getAdultLiteracyRate() {
@@ -44,7 +44,7 @@ public class Country {
     }
 
     public void setAdultLiteracyRate(Double adultLiteracyRate) {
-        mAdultLiteracyRate = adultLiteracyRate;
+        this.mAdultLiteracyRate = adultLiteracyRate;
     }
 
 
@@ -61,10 +61,10 @@ public class Country {
     @Override
     public String toString() {
         return "Country { " +
-                "mId = " + mId +
-                ", mName = '" + mName + '\'' +
-                ", mInternetUsers = " + mInternetUsers +
-                ", mAdultLiteracyRate = " + mAdultLiteracyRate +
+                "id = " + mCode +
+                ", name = '" + mName + '\'' +
+                ", internetUsers = " + mInternetUsers +
+                ", adultLiteracyRate = " + mAdultLiteracyRate +
                 " }";
     }
     // builder object
