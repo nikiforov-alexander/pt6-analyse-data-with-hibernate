@@ -70,5 +70,19 @@ public class CountriesDaoImplementation implements CountriesDao {
         session.close();
     }
 
+    @Override
+    public void delete(Country country) {
+        // Open a session
+        Session session = mSessionFactory.openSession();
+        // Begin a transaction
+        session.beginTransaction();
+        // Use the session to delete
+        session.delete(country);
+        // Commit transaction
+        session.getTransaction().commit();
+        // Close session
+        session.close();
+    }
+
 
 }
