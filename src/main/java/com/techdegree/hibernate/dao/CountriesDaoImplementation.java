@@ -43,4 +43,16 @@ public class CountriesDaoImplementation implements CountriesDao {
         // return id of newly created object in database
         return code;
     }
+
+    @Override
+    public Country findCountryByCode(String code) {
+        // Open a session
+        Session session = mSessionFactory.openSession();
+        // Use the session to get by code
+        Country country = session.get(Country.class, code);
+        // Close session
+        session.close();
+        // return found country
+        return country;
+    }
 }
