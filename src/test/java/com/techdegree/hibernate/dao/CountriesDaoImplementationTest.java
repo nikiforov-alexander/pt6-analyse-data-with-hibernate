@@ -120,4 +120,16 @@ public class CountriesDaoImplementationTest {
                 mCountriesDaoImplementation.findCountryByCode("ABC");
         assertEquals("New Country Name", testCountryFromDataBase.getName());
     }
+
+    @Test
+    public void deleteCountrySetsSizeToZero() throws Exception {
+        // Given testing database with ABC country
+        addTestCountryToDatabase();
+        // When we delete only entry from database
+        mCountriesDaoImplementation.delete(mTestCountryWithAbcCode);
+        // Then size of the list of all countries should be zero
+        int sizeOfListOfCountriesInDataBase =
+                mCountriesDaoImplementation.findAll().size();
+        assertEquals(0, sizeOfListOfCountriesInDataBase);
+    }
 }
