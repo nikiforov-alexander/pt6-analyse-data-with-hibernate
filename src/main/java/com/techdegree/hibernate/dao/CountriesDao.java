@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface CountriesDao {
     public List<Country> findAll();
-    public String save(Country country);
+    public String add(Country country);
 }
