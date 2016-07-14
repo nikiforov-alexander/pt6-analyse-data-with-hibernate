@@ -15,6 +15,7 @@ public class CountriesDaoImplementation implements CountriesDao {
         mSessionFactory = sessionFactory;
     }
     @Override
+    @SuppressWarnings("unchecked")
     public List<Country> findAll() {
         // Open a session
         Session session = mSessionFactory.openSession();
