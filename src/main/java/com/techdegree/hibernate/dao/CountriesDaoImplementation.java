@@ -55,4 +55,20 @@ public class CountriesDaoImplementation implements CountriesDao {
         // return found country
         return country;
     }
+
+    @Override
+    public void update(Country country) {
+        // Open a session
+        Session session = mSessionFactory.openSession();
+        // Begin a transaction
+        session.beginTransaction();
+        // Use the session to update
+        session.update(country);
+        // Commit transaction
+        session.getTransaction().commit();
+        // Close session
+        session.close();
+    }
+
+
 }
