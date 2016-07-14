@@ -9,4 +9,5 @@ public interface CountriesDao {
     public String add(Country country);
     public Country findCountryByCode(String code);
     public void update(Country country);
+    public void delete(Country country);
 }
