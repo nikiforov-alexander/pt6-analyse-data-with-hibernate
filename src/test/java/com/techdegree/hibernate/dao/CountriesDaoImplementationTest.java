@@ -106,4 +106,18 @@ public class CountriesDaoImplementationTest {
         // Then obtained country should be equal to our test country
         assertEquals(mTestCountryWithAbcCode, foundCountry);
     }
+
+    @Test
+    public void updateCountryByChangingCodeUpdatesTheCountry() throws Exception {
+        // Given testing database with ABC country,
+        addTestCountryToDatabase();
+        // When we set new name and update database
+        mTestCountryWithAbcCode.setName("New Country Name");
+        mCountriesDaoImplementation.update(mTestCountryWithAbcCode);
+        // Then country's name fetched from database should be equal to
+        // new name
+        Country testCountryFromDataBase =
+                mCountriesDaoImplementation.findCountryByCode("ABC");
+        assertEquals("New Country Name", testCountryFromDataBase.getName());
+    }
 }
