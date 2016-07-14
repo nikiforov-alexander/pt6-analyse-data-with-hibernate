@@ -60,6 +60,26 @@ public class Country {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Country country = (Country) o;
+
+        if (mCode != null ? !mCode.equals(country.mCode) : country.mCode != null)
+            return false;
+        return mName != null ? mName.equals(country.mName) : country.mName == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mCode != null ? mCode.hashCode() : 0;
+        result = 31 * result + (mName != null ? mName.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Country { " +
                 "id = " + mCode +
