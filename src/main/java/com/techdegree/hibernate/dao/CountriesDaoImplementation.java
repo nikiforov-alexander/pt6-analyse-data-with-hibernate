@@ -20,7 +20,7 @@ public class CountriesDaoImplementation implements CountriesDao {
         Session session = mSessionFactory.openSession();
         // Create criteria
         Criteria criteria = session.createCriteria(Country.class);
-        // Use the session to save
+        // Use the criteria to fetch list of all countries
         List<Country> countries  = criteria.list();
         // Close session
         session.close();
@@ -29,12 +29,12 @@ public class CountriesDaoImplementation implements CountriesDao {
     }
 
     @Override
-    public String save(Country country) {
+    public String add(Country country) {
         // Open a session
         Session session = mSessionFactory.openSession();
         // Begin a transaction
         session.beginTransaction();
-        // Use the session to save
+        // Use the session to add
         String code = (String) session.save(country);
         // Commit transaction
         session.getTransaction().commit();
