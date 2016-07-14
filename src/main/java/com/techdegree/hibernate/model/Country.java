@@ -1,26 +1,26 @@
 package com.techdegree.hibernate.model;
 
 import javax.persistence.*;
-import javax.xml.stream.StreamFilter;
 
 @Entity
+@Table(name = "COUNTRY")
 public class Country {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int mId;
-    @Column
+    @Column(name = "CODE", columnDefinition = "VARCHAR(3)")
+    private String mCode;
+    @Column(name = "NAME", columnDefinition = "VARCHAR(32)")
     private String mName;
-    @Column
+    @Column(name = "INTERNETUSERS", columnDefinition = "DECIMAL(11,8)")
     private Double mInternetUsers;
-    @Column
+    @Column(name = "ADULTLITERACYRATE", columnDefinition = "DECIMAL(11,8)")
     private Double mAdultLiteracyRate;
 
-    public int getId() {
-        return mId;
+    public String getCode() {
+        return mCode;
     }
 
-    public void setId(int id) {
-        mId = id;
+    public void setCode(String code) {
+        this.mCode = code;
     }
 
     public String getName() {
@@ -28,7 +28,7 @@ public class Country {
     }
 
     public void setName(String name) {
-        mName = name;
+        this.mName = name;
     }
 
     public Double getInternetUsers() {
@@ -36,7 +36,7 @@ public class Country {
     }
 
     public void setInternetUsers(Double internetUsers) {
-        mInternetUsers = internetUsers;
+        this.mInternetUsers = internetUsers;
     }
 
     public Double getAdultLiteracyRate() {
@@ -44,7 +44,7 @@ public class Country {
     }
 
     public void setAdultLiteracyRate(Double adultLiteracyRate) {
-        mAdultLiteracyRate = adultLiteracyRate;
+        this.mAdultLiteracyRate = adultLiteracyRate;
     }
 
 
@@ -53,27 +53,53 @@ public class Country {
     }
 
     public Country(CountryBuilder countryBuilder) {
+        mCode = countryBuilder.mCode;
         mName = countryBuilder.mName;
         mInternetUsers = countryBuilder.mInternetUsers;
         mAdultLiteracyRate = countryBuilder.mAdultLiteracyRate;
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Country country = (Country) o;
+
+        if (mCode != null ? !mCode.equals(country.mCode) : country.mCode != null)
+            return false;
+        return mName != null ? mName.equals(country.mName) : country.mName == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mCode != null ? mCode.hashCode() : 0;
+        result = 31 * result + (mName != null ? mName.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Country { " +
-                "mId = " + mId +
-                ", mName = '" + mName + '\'' +
-                ", mInternetUsers = " + mInternetUsers +
-                ", mAdultLiteracyRate = " + mAdultLiteracyRate +
+                "id = " + mCode +
+                ", name = '" + mName + '\'' +
+                ", internetUsers = " + mInternetUsers +
+                ", adultLiteracyRate = " + mAdultLiteracyRate +
                 " }";
     }
     // builder object
-    public class CountryBuilder {
+    public static class CountryBuilder {
+        private String mCode;
         private String mName;
         private Double mInternetUsers;
         private Double mAdultLiteracyRate;
-        public CountryBuilder(String name) {
+        public CountryBuilder(String code) {
+            mCode = code;
+        }
+        public CountryBuilder withName(String name) {
             mName = name;
+            return this;
         }
         public CountryBuilder withInternetUsers(Double internetUsers) {
             mInternetUsers = internetUsers;
