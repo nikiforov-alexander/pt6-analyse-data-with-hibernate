@@ -53,6 +53,7 @@ public class Country {
     }
 
     public Country(CountryBuilder countryBuilder) {
+        mCode = countryBuilder.mCode;
         mName = countryBuilder.mName;
         mInternetUsers = countryBuilder.mInternetUsers;
         mAdultLiteracyRate = countryBuilder.mAdultLiteracyRate;
@@ -69,11 +70,16 @@ public class Country {
     }
     // builder object
     public static class CountryBuilder {
+        private String mCode;
         private String mName;
         private Double mInternetUsers;
         private Double mAdultLiteracyRate;
-        public CountryBuilder(String name) {
+        public CountryBuilder(String code) {
+            mCode = code;
+        }
+        public CountryBuilder withName(String name) {
             mName = name;
+            return this;
         }
         public CountryBuilder withInternetUsers(Double internetUsers) {
             mInternetUsers = internetUsers;
