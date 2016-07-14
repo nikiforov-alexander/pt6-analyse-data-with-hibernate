@@ -11,6 +11,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class CountriesDaoImplementationTest {
@@ -21,8 +23,20 @@ public class CountriesDaoImplementationTest {
     // Dao with all CRUDs we test
     private CountriesDaoImplementation mCountriesDaoImplementation;
 
-    @BeforeClass
-    public static void setUpSessionFactory() {
+//    @BeforeClass
+//    public static void setUpSessionFactory() {
+//        // setting up session factory
+//        final ServiceRegistry serviceRegistry =
+//                new StandardServiceRegistryBuilder()
+//                        .configure(TEST_CONFIGURATION_FILE)
+//                        .build();
+//        mSessionFactory =
+//                new MetadataSources(serviceRegistry)
+//                .buildMetadata()
+//                .buildSessionFactory();
+//    }
+    @Before
+    public void setUp() throws Exception {
         // setting up session factory
         final ServiceRegistry serviceRegistry =
                 new StandardServiceRegistryBuilder()
@@ -32,9 +46,6 @@ public class CountriesDaoImplementationTest {
                 new MetadataSources(serviceRegistry)
                 .buildMetadata()
                 .buildSessionFactory();
-    }
-    @Before
-    public void setUp() throws Exception {
        // setting up DAO with our session factory
        mCountriesDaoImplementation = new
                CountriesDaoImplementation(mSessionFactory);
@@ -42,11 +53,27 @@ public class CountriesDaoImplementationTest {
 
     @After
     public void tearDown() throws Exception {
-
+        mSessionFactory.close();
     }
 
     @Test
-    public void savingCountryWorks() throws Exception {
+    public void findAllReturnsOneTestCountryWhenWeAddIt() throws Exception {
+        // Given database with one country
+        Country country = new CountryBuilder("DBC")
+                .withName("Country")
+                .withAdultLiteracyRate(1.0)
+                .withInternetUsers(1.0)
+                .build();
+        mCountriesDaoImplementation.add(country);
+        // When we fetch all countries
+        List<Country> listOfAllCountries =
+                mCountriesDaoImplementation.findAll();
+        // Then size of list should be one
+        assertEquals(1, listOfAllCountries.size());
+    }
+
+    @Test
+    public void savingCountryReturnsCountryCode() throws Exception {
         // Given empty testing database and test country with code "ABC"
         String countryCode = "ABC";
         Country country = new CountryBuilder(countryCode)
@@ -54,9 +81,10 @@ public class CountriesDaoImplementationTest {
                 .withAdultLiteracyRate(1.0)
                 .withInternetUsers(1.0)
                 .build();
-        // When we save a country
-        String codeFromSave = mCountriesDaoImplementation.save(country);
+        // When we add a country
+        String codeFromSave = mCountriesDaoImplementation.add(country);
         // Then code of country should be returned
         assertEquals(countryCode, codeFromSave);
     }
+
 }
