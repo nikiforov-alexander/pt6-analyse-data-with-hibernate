@@ -68,7 +68,7 @@ public class Country {
                 " }";
     }
     // builder object
-    public class CountryBuilder {
+    public static class CountryBuilder {
         private String mName;
         private Double mInternetUsers;
         private Double mAdultLiteracyRate;
