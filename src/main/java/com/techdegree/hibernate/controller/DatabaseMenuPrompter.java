@@ -34,17 +34,7 @@ public class DatabaseMenuPrompter extends Prompter {
     }
 
 
-    private void deleteCountryByCode() throws IOException {
-        String code = promptForCode();
-        Country foundCountry =
-                mCountriesDaoImplementation.findCountryByCode(code);
-        if (foundCountry != null) {
-            mCountriesDaoImplementation.delete(foundCountry);
-        } else {
-            mLogger.setErrorMessage("Country with this code is not found");
-        }
-    }
-    // used in addNewCountry method
+    // used in addNewCountry, deleteCountryById methods
     // prompts for country code. code is primary key, so no null can be
     // accepted, and only 3 letter words are accepted
     // @throws IOException - see
@@ -57,7 +47,7 @@ public class DatabaseMenuPrompter extends Prompter {
                 "Wrong code"
         );
     }
-    // used in addNewCountry method
+    // used in addNewCountry, deleteCountryById methods
     // prompts for name. I don't accept null here, because there should be
     // some name.
     // @return String - valid country name to be inserted in database
@@ -83,18 +73,34 @@ public class DatabaseMenuPrompter extends Prompter {
         // If user types 'null' then value will go to database as null,
         // or "--"
         String acceptedDecimalValue =
-            promptForStringWithPatternUntilUserInputMatchingOne(
-                "^(?=[0-9]+\\.[0-9]+|[0-9]+|[0-9]+\\.|null).{0,10}$",
-                "Please type '" + decimalName + "' of the new country " +
-                    "(decimal or integer with max 10 digits, " +
-                    "like '1', '1.', '1.23456789' max or '1234567890' max " +
-                    "or type 'null' for absent value",
-                "Wrong decimal"
-            );
+                promptForStringWithPatternUntilUserInputMatchingOne(
+                        "^(?=[0-9]+\\.[0-9]+|[0-9]+|[0-9]+\\.|null).{0,10}$",
+                        "Please type '" + decimalName + "' of the new country " +
+                                "(decimal or integer with max 10 digits, " +
+                                "like '1', '1.', '1.23456789' max or '1234567890' max " +
+                                "or type 'null' for absent value",
+                        "Wrong decimal"
+                );
         if (acceptedDecimalValue.equals("null")) {
             return null;
         } else {
             return Double.valueOf(acceptedDecimalValue);
+        }
+    }
+
+    // is executed upon "2": Delete option in Main Menu
+    // @throws IOException because of prompt methods
+    private void deleteCountryByCode() throws IOException {
+        // prompt user for code
+        String code = promptForCode();
+        // try to find country by code
+        Country foundCountry =
+                mCountriesDaoImplementation.findCountryByCode(code);
+        // if country is found, delete, if not print "Error"
+        if (foundCountry != null) {
+            mCountriesDaoImplementation.delete(foundCountry);
+        } else {
+            mLogger.setErrorMessage("Country with this code is not found");
         }
     }
     // is executed upon "Add" choice: 1
