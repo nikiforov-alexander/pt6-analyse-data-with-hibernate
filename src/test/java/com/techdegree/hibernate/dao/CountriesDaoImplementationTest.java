@@ -8,7 +8,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
@@ -63,7 +62,7 @@ public class CountriesDaoImplementationTest {
                 .withAdultLiteracyRate(null)
                 .withInternetUsers(1.0)
                 .build();
-       mCountriesDaoImplementation.add(mTestCountryWithAbcCode);
+       mCountriesDaoImplementation.save(mTestCountryWithAbcCode);
     }
     @Test
     public void findAllReturnsOneTestCountryWhenWeAddIt() throws Exception {
@@ -84,9 +83,9 @@ public class CountriesDaoImplementationTest {
                 .withAdultLiteracyRate(null)
                 .withInternetUsers(1.0)
                 .build();
-        // When we add a country
+        // When we save a country
         String codeFromSave = mCountriesDaoImplementation
-                .add(testCountryWithAbcCode);
+                .save(testCountryWithAbcCode);
         // Then code of country should be returned
         assertEquals("ABC", codeFromSave);
     }
