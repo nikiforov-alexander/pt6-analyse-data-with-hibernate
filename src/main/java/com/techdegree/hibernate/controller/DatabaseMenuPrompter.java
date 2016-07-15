@@ -33,6 +33,17 @@ public class DatabaseMenuPrompter extends Prompter {
                 countriesDaoImplementation);
     }
 
+
+    private void deleteCountryByCode() throws IOException {
+        String code = promptForCode();
+        Country foundCountry =
+                mCountriesDaoImplementation.findCountryByCode(code);
+        if (foundCountry != null) {
+            mCountriesDaoImplementation.delete(foundCountry);
+        } else {
+            mLogger.setErrorMessage("Country with this code is not found");
+        }
+    }
     // used in addNewCountry method
     // prompts for country code. code is primary key, so no null can be
     // accepted, and only 3 letter words are accepted
@@ -127,6 +138,9 @@ public class DatabaseMenuPrompter extends Prompter {
                 break;
             case 1:
                 addNewCountry();
+                break;
+            case 2:
+                deleteCountryByCode();
                 break;
             default:
                 mLogger.setErrorMessage("Unknown choice or no teams: '" +
