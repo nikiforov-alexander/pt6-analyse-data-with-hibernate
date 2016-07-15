@@ -23,6 +23,7 @@ public class DatabaseMenuPrompter extends Prompter {
         mMenu = new HashMap<>();
         fillMenuMapWithOptions();
     }
+    // used in addNewCountry method
     // default constructor used in real app with new Reader and Logger
     // and real database DAO from Main
     public DatabaseMenuPrompter(
@@ -32,6 +33,7 @@ public class DatabaseMenuPrompter extends Prompter {
                 countriesDaoImplementation);
     }
 
+    // used in addNewCountry method
     // prompts for country code. code is primary key, so no null can be
     // accepted, and only 3 letter words are accepted
     // @throws IOException - see
@@ -44,6 +46,7 @@ public class DatabaseMenuPrompter extends Prompter {
                 "Wrong code"
         );
     }
+    // used in addNewCountry method
     // prompts for name. I don't accept null here, because there should be
     // some name.
     // @return String - valid country name to be inserted in database
@@ -57,14 +60,14 @@ public class DatabaseMenuPrompter extends Prompter {
                 "Wrong name"
         );
     }
-    // used in add method
+    // used in addNewCountry method
     // @return correct Double or null - works for both decimal fields in
     //         database
     // @throws IOException - see
     //      promptForStringWithPatternUntilUserInputMatchingOne.
     private Double promptForDecimal(String decimalName) throws IOException {
         // can be "1", "1.", "1.23456789" max, the last digit will be added by
-        // me, also "1234567890", then I will add 1234567890.0
+        // me, also "1234567890", then I will save 1234567890.0
         // applied to both decimals
         // If user types 'null' then value will go to database as null,
         // or "--"
@@ -98,8 +101,8 @@ public class DatabaseMenuPrompter extends Prompter {
                 .withInternetUsers(internetUsers)
                 .withAdultLiteracyRate(adultLiteracyRate)
                 .build();
-        // add to database
-        mCountriesDaoImplementation.add(country);
+        // save to database
+        mCountriesDaoImplementation.save(country);
     }
 
     // fill menu map with options, used in constructors, see also
