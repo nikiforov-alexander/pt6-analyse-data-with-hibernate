@@ -139,4 +139,21 @@ public class DatabaseMenuPrompterTest {
         // Then Logger with error message should be invoked 5 times
         verify(mMockedLogger, times(5)).setErrorMessage(anyString());
     }
+
+    @Test
+    public void addingCountryWithExistingCodeGivesLoggerError()
+            throws Exception {
+        // Given menu with DAO, pointing to test database w "ABC" country
+        addTestCountryToDatabase();
+        // When user is asked to add new Country and all valid fields
+        // are entered
+        when(mMockedBufferedReader.readLine())
+                .thenReturn("1")
+                .thenReturn("ABC")
+                .thenReturn("0");
+        // actual menu call
+        mDatabaseMenuPrompter.presentMenuWithPossibleOptions();
+        // Then Logger should return error
+        verify(mMockedLogger).setErrorMessage(contains("already exists"));
+    }
 }
