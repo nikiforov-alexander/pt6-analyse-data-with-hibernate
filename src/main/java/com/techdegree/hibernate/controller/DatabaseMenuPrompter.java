@@ -55,7 +55,7 @@ public class DatabaseMenuPrompter extends Prompter {
     //      promptForStringWithPatternUntilUserInputMatchingOne.
     private String promptForName() throws IOException {
         return promptForStringWithPatternUntilUserInputMatchingOne(
-                "^[a-zA-Z]+{0,32}",
+                "^(?=([a-zA-Z]+)).{0,32}$",
                 "Please type Name of the new country " +
                         "(0-32 letters, like 'Country')",
                 "Wrong name"
@@ -88,6 +88,32 @@ public class DatabaseMenuPrompter extends Prompter {
         }
     }
 
+    // is executed upon "3" : Edit option in Main Menu
+    private void editCountry() throws IOException {
+        // prompt user for Code
+        String code = promptForCode();
+        // try to find country
+        Country foundCountry =
+                mCountriesDaoImplementation.findCountryByCode(code);
+        // if country is found, update with all fields, else print error
+        if (foundCountry != null) {
+            // Since it was not specifically mentioned I will provide basic
+            // functionality here, i.e. editing is possible only for all
+            // all fields
+            // prompt for name, internetUsers and adultLiteracyRate
+            String name = promptForName();
+            Double internetUsers = promptForDecimal("Internet Users");
+            Double adultLiteracyRate = promptForDecimal("Adult Literacy Rate");
+            // set fields using setters
+            foundCountry.setName(name);
+            foundCountry.setInternetUsers(internetUsers);
+            foundCountry.setAdultLiteracyRate(adultLiteracyRate);
+            // update found country
+            mCountriesDaoImplementation.update(foundCountry);
+        } else {
+            mLogger.setErrorMessage("Country with this code is not found");
+        }
+    }
     // is executed upon "2": Delete option in Main Menu
     // @throws IOException because of prompt methods
     private void deleteCountryByCode() throws IOException {
@@ -147,6 +173,9 @@ public class DatabaseMenuPrompter extends Prompter {
                 break;
             case 2:
                 deleteCountryByCode();
+                break;
+            case 3:
+                editCountry();
                 break;
             default:
                 mLogger.setErrorMessage("Unknown choice or no teams: '" +
