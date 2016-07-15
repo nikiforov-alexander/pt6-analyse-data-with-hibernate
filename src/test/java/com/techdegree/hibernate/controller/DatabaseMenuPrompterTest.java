@@ -234,4 +234,62 @@ public class DatabaseMenuPrompterTest {
         // Then Logger should be invoked with not found message
         verify(mMockedLogger).setErrorMessage(contains("not found"));
     }
+
+    //  Prompting for name, code and decimal tests
+
+
+    // testing error in code input
+    @Test
+    public void promptForCodeWorksOnlyWithThreeLetter() throws Exception {
+        // Given menu with DAO, pointing to empty Database
+        // When promptForCode method is called with following error cases
+        when(mMockedBufferedReader.readLine())
+                .thenReturn("A")
+                .thenReturn("AB")
+                .thenReturn("a")
+                .thenReturn("ab")
+                .thenReturn(" ")
+                .thenReturn("")
+                .thenReturn("123")
+                .thenReturn("ABC ab")
+                .thenReturn(" ABCS ")
+                .thenReturn("ABC");
+        // actual method call
+        String name = mDatabaseMenuPrompter.promptForCode();
+        // Then only last right one should be accepted
+        assertEquals("ABC", name);
+    }
+    // testing error in name input
+    @Test
+    public void promptDoesNotWorkWithBadInput() throws Exception {
+        // Given menu with DAO, pointing to empty Database
+        // When promptForName method is called with following error cases
+        when(mMockedBufferedReader.readLine())
+                .thenReturn("CountryWithMoreThan32LettersVeryBigCountry")
+                .thenReturn(" ")
+                .thenReturn("")
+                .thenReturn("123")
+                .thenReturn("Some Country");
+        // actual method call
+        String name = mDatabaseMenuPrompter.promptForName();
+        // Then only last right one should be accepted
+        assertEquals("Some Country", name);
+    }
+    // testing error in decimal input, for both decimal fields
+    @Test
+    public void promptForDecimalWorksOnlyWithThreeLetter() throws Exception {
+        // Given menu with DAO, pointing to empty Database
+        // When promptForDecimal method is called with following error cases
+        when(mMockedBufferedReader.readLine())
+                .thenReturn("String")
+                .thenReturn(" ")
+                .thenReturn("")
+                .thenReturn("12345678901") // number with 11 digits no dots
+                .thenReturn("1.234567890") // decimal with 10 digits one dot
+                .thenReturn("1.0");
+        // actual method call
+        Double decimal = mDatabaseMenuPrompter.promptForDecimal("decimal name");
+        // Then only last right one should be accepted
+        assertEquals(Double.valueOf(1.0), decimal);
+    }
 }
