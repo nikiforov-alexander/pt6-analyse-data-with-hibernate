@@ -259,9 +259,31 @@ public class DatabaseMenuPrompterTest {
         // Then only last right one should be accepted
         assertEquals("ABC", name);
     }
-    // testing error in name input
+    // testing valid code inputs
     @Test
-    public void promptDoesNotWorkWithBadInput() throws Exception {
+    public void validCountryCodeValuesAreAccepted() throws Exception {
+        // Given menu with DAO, pointing to empty Database
+        // When promptForCode method is called with following valid
+        // country names
+        String[] arrayOfValidCountryCodes = new String[]{
+                "ABC",
+                "abc",
+                " abc ",
+                " ABC "
+        };
+        for (String validCountryCode : arrayOfValidCountryCodes) {
+            when(mMockedBufferedReader.readLine())
+                    .thenReturn(validCountryCode);
+            // actual method call
+            String acceptedCode = mDatabaseMenuPrompter.promptForCode();
+            // Then valid country code is accepted
+            assertEquals(validCountryCode.trim(), acceptedCode);
+        }
+    }
+
+    // testing error in country name input
+    @Test
+    public void promptNameDoesNotWorkWithBadInput() throws Exception {
         // Given menu with DAO, pointing to empty Database
         // When promptForName method is called with following error cases
         when(mMockedBufferedReader.readLine())
@@ -274,6 +296,27 @@ public class DatabaseMenuPrompterTest {
         String name = mDatabaseMenuPrompter.promptForName();
         // Then only last right one should be accepted
         assertEquals("Some Country", name);
+    }
+    // testing good values in country name
+    @Test
+    public void validCountryNameValuesAreAccepted() throws Exception {
+        // Given menu with DAO, pointing to empty Database
+        // When promptForName method is called with following valid
+        // country names
+        String[] arrayOfValidCountryNames = new String[]{
+                "Country",
+                "New Country",
+                "country",
+                " country w trail and lead spaces "
+        };
+        for (String validCountryName : arrayOfValidCountryNames) {
+            when(mMockedBufferedReader.readLine())
+                    .thenReturn(validCountryName);
+            // actual method call
+            String acceptedName = mDatabaseMenuPrompter.promptForName();
+            // Then valid country name is accepted
+            assertEquals(validCountryName.trim(), acceptedName);
+        }
     }
     // testing error in decimal input, for both decimal fields
     @Test
@@ -291,5 +334,30 @@ public class DatabaseMenuPrompterTest {
         Double decimal = mDatabaseMenuPrompter.promptForDecimal("decimal name");
         // Then only last right one should be accepted
         assertEquals(Double.valueOf(1.0), decimal);
+    }
+    @Test
+    public void validDecimalValuesAreAccepted() throws Exception {
+        // Given menu with DAO, pointing to empty Database
+        // When promptForDecimal method is called with following valid
+        // country names
+        String[] arrayOfValidCountryDecimals = new String[]{
+                "1",
+                "1.",
+                "1.2",
+                "1234567890",
+                "1.23456789",
+                " 1.0 "
+        };
+        for (String validCountryDecimal : arrayOfValidCountryDecimals) {
+            when(mMockedBufferedReader.readLine())
+                    .thenReturn(validCountryDecimal);
+            // actual method call
+            Double acceptedDecimal =
+                    mDatabaseMenuPrompter.promptForDecimal("some Decimal");
+            // Then valid decimal is accepted
+            assertEquals(
+                    Double.valueOf(validCountryDecimal),
+                    acceptedDecimal);
+        }
     }
 }
