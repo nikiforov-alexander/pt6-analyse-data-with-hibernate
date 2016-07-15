@@ -92,17 +92,22 @@ public class DatabaseMenuPrompter extends Prompter {
     private void addNewCountry() throws IOException {
         // prompt for member variables
         String code = promptForCode();
-        String name = promptForName();
-        Double internetUsers = promptForDecimal("Internet Users");
-        Double adultLiteracyRate = promptForDecimal("Adult Literacy Rate");
-        // create new country
-        Country country = new Country.CountryBuilder(code)
-                .withName(name)
-                .withInternetUsers(internetUsers)
-                .withAdultLiteracyRate(adultLiteracyRate)
-                .build();
-        // save to database
-        mCountriesDaoImplementation.save(country);
+        // if country with this code does not exist
+        if (mCountriesDaoImplementation.findCountryByCode(code) == null) {
+            String name = promptForName();
+            Double internetUsers = promptForDecimal("Internet Users");
+            Double adultLiteracyRate = promptForDecimal("Adult Literacy Rate");
+            // create new country
+            Country country = new Country.CountryBuilder(code)
+                    .withName(name)
+                    .withInternetUsers(internetUsers)
+                    .withAdultLiteracyRate(adultLiteracyRate)
+                    .build();
+            // save to database
+            mCountriesDaoImplementation.save(country);
+        } else {
+            mLogger.setErrorMessage("Country with this code already exists");
+        }
     }
 
     // fill menu map with options, used in constructors, see also
