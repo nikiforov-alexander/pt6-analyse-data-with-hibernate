@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.OptionalDouble;
 
 public class DatabaseMenuPrompter extends Prompter {
     // reference to our DAO accessing database, testing or real one
@@ -86,6 +87,18 @@ public class DatabaseMenuPrompter extends Prompter {
         } else {
             return Double.valueOf(acceptedDecimalValue);
         }
+    }
+
+    // is executed upon "5: Shows statistics of database
+    private void showStatistics() {
+        System.out.println("Min adult literacy rate is: " +
+                mCountriesDaoImplementation.getMinimumAdultLiteracy());
+        System.out.println("Max adult literacy rate is: " +
+                mCountriesDaoImplementation.getMaximumAdultLiteracy());
+        System.out.println("Min internet users is: " +
+                mCountriesDaoImplementation.getMinimumInternetUsers());
+        System.out.println("Max internet users is: " +
+                mCountriesDaoImplementation.getMaximumInternetUsers());
     }
 
     // is executed upon "4" : Show all countries in database
@@ -185,6 +198,7 @@ public class DatabaseMenuPrompter extends Prompter {
         mMenu.put(2, "Delete");
         mMenu.put(3, "Edit");
         mMenu.put(4, "Show all");
+        mMenu.put(5, "Show statistics");
     }
     // method processing user choice through switch
     private void processUserChoice(int userChoice) throws IOException {
@@ -206,6 +220,9 @@ public class DatabaseMenuPrompter extends Prompter {
                 break;
             case 4:
                 showAll();
+                break;
+            case 5:
+                showStatistics();
                 break;
             default:
                 mLogger.setErrorMessage("Unknown choice or no teams: '" +
