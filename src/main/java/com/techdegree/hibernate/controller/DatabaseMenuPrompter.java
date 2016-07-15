@@ -193,12 +193,15 @@ public class DatabaseMenuPrompter extends Prompter {
                 mLogger.setSuccessMessage("Exiting...");
                 break;
             case 1:
+                showAll();
                 addNewCountry();
                 break;
             case 2:
+                showAll();
                 deleteCountryByCode();
                 break;
             case 3:
+                showAll();
                 editCountry();
                 break;
             case 4:
