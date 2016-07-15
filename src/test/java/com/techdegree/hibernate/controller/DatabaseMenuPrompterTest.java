@@ -89,7 +89,7 @@ public class DatabaseMenuPrompterTest {
                 .withAdultLiteracyRate(null)
                 .withInternetUsers(1.0)
                 .build();
-        mCountriesDaoImplementation.add(mTestCountryWithAbcCode);
+        mCountriesDaoImplementation.save(mTestCountryWithAbcCode);
     }
 
     @Test
