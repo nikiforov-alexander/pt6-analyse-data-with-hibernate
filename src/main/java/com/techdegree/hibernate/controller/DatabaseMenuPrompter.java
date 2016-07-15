@@ -88,6 +88,30 @@ public class DatabaseMenuPrompter extends Prompter {
         }
     }
 
+    // is executed upon "4" : Show all countries in database
+    private void showAll() {
+        // print header
+        System.out.printf("%7s %40s %15s %15s%n",
+                "Code",
+                "Country Name",
+                "Internet Users",
+                "Literacy"
+        );
+        printEightHyphensWithoutNewLine();
+        System.out.printf("%n");
+        // print countries in database
+        mCountriesDaoImplementation
+                .findAll().forEach(System.out::println);
+        printEightHyphensWithoutNewLine();
+        // print header
+        System.out.printf("%n%7s %40s %15s %15s%n",
+                "Code",
+                "Country Name",
+                "Internet Users",
+                "Literacy"
+        );
+    }
+
     // is executed upon "3" : Edit option in Main Menu
     private void editCountry() throws IOException {
         // prompt user for Code
@@ -176,6 +200,9 @@ public class DatabaseMenuPrompter extends Prompter {
                 break;
             case 3:
                 editCountry();
+                break;
+            case 4:
+                showAll();
                 break;
             default:
                 mLogger.setErrorMessage("Unknown choice or no teams: '" +
