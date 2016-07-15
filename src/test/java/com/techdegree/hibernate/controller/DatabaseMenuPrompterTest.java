@@ -92,6 +92,7 @@ public class DatabaseMenuPrompterTest {
         mCountriesDaoImplementation.save(mTestCountryWithAbcCode);
     }
 
+    // Country addition tests
     @Test
     public void addingNewCountryThroughPrompterWorks() throws Exception {
         // Given menu with DAO, pointing to empty test database
@@ -139,7 +140,6 @@ public class DatabaseMenuPrompterTest {
         // Then Logger with error message should be invoked 5 times
         verify(mMockedLogger, times(5)).setErrorMessage(anyString());
     }
-
     @Test
     public void addingCountryWithExistingCodeGivesLoggerError()
             throws Exception {
@@ -155,5 +155,38 @@ public class DatabaseMenuPrompterTest {
         mDatabaseMenuPrompter.presentMenuWithPossibleOptions();
         // Then Logger should return error
         verify(mMockedLogger).setErrorMessage(contains("already exists"));
+    }
+
+    // Country deletion tests
+
+    @Test
+    public void deletingCountryFromDatabaseActuallyDeletesCountry()
+            throws Exception {
+        // Given menu with DAO, pointing to test database with "ABC" country
+        addTestCountryToDatabase();
+        // When user is trying to delete country by code
+        when(mMockedBufferedReader.readLine())
+                .thenReturn("2")
+                .thenReturn("ABC")
+                .thenReturn("0");
+        // actual menu call
+        mDatabaseMenuPrompter.presentMenuWithPossibleOptions();
+        // Then no country with ABC should be found
+        assertNull(mCountriesDaoImplementation.findCountryByCode("ABC"));
+    }
+    @Test
+    public void deletingNotExistingCountryFromDatabaseGivesError()
+            throws Exception {
+        // Given menu with DAO, pointing to test database with "ABC" country
+        addTestCountryToDatabase();
+        // When user is trying to delete non-existing country by code
+        when(mMockedBufferedReader.readLine())
+                .thenReturn("2")
+                .thenReturn("CBA")
+                .thenReturn("0");
+        // actual menu call
+        mDatabaseMenuPrompter.presentMenuWithPossibleOptions();
+        // Then Logger should return error message "not found"
+        verify(mMockedLogger).setErrorMessage(contains("not found"));
     }
 }
