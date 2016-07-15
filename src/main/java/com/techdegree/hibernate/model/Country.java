@@ -79,14 +79,21 @@ public class Country {
         return result;
     }
 
+    private String getStringFromDecimalToPrint(Double decimal) {
+        if (decimal == null) {
+            return "--";
+        } else {
+            return String.format("%15.2f", decimal);
+        }
+    }
+
     @Override
     public String toString() {
-        return "Country { " +
-                "id = " + mCode +
-                ", name = '" + mName + '\'' +
-                ", internetUsers = " + mInternetUsers +
-                ", adultLiteracyRate = " + mAdultLiteracyRate +
-                " }";
+        return String.format("%7s %40s %15s %15s%n",
+                mCode,
+                mName,
+                getStringFromDecimalToPrint(mInternetUsers),
+                getStringFromDecimalToPrint(mAdultLiteracyRate));
     }
     // builder object
     public static class CountryBuilder {
