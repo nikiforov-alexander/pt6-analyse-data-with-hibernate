@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="H2 - worldbank" uuid="4f3e90ad-a028-4110-a954-277f2e83f4d0">
+  <data-source name="H2 - worldbank" uuid="9155bcd0-b504-457e-a837-005483dfd4f2">
     <database-info product="H2" version="1.4.192 (2016-05-26)" jdbc-version="4.0" driver-name="H2 JDBC Driver" driver-version="1.4.192 (2016-05-26)">
       <identifier-quote-string>&quot;</identifier-quote-string>
     </database-info>
