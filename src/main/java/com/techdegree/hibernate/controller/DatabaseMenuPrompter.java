@@ -39,7 +39,7 @@ public class DatabaseMenuPrompter extends Prompter {
     // accepted, and only 3 letter words are accepted
     // @throws IOException - see
     //      promptForStringWithPatternUntilUserInputMatchingOne.
-    private String promptForCode() throws IOException {
+    protected String promptForCode() throws IOException {
         return promptForStringWithPatternUntilUserInputMatchingOne(
                 "^[a-zA-Z]{3}$",
                 "Please type Code of the new country " +
@@ -53,7 +53,7 @@ public class DatabaseMenuPrompter extends Prompter {
     // @return String - valid country name to be inserted in database
     // @throws IOException - see
     //      promptForStringWithPatternUntilUserInputMatchingOne.
-    private String promptForName() throws IOException {
+    protected String promptForName() throws IOException {
         return promptForStringWithPatternUntilUserInputMatchingOne(
                 "^(?=([a-zA-Z]+)).{0,32}$",
                 "Please type Name of the new country " +
@@ -66,7 +66,7 @@ public class DatabaseMenuPrompter extends Prompter {
     //         database
     // @throws IOException - see
     //      promptForStringWithPatternUntilUserInputMatchingOne.
-    private Double promptForDecimal(String decimalName) throws IOException {
+    protected Double promptForDecimal(String decimalName) throws IOException {
         // can be "1", "1.", "1.23456789" max, the last digit will be added by
         // me, also "1234567890", then I will save 1234567890.0
         // applied to both decimals
