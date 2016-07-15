@@ -196,4 +196,11 @@ public class Prompter {
         );
         System.out.printf("%n----%n");
     }
+
+    // helpful print method
+    public void printEightHyphensWithoutNewLine() {
+        for (int i = 1; i <= 80 ; i++) {
+            System.out.printf("-");
+        }
+    }
 }
