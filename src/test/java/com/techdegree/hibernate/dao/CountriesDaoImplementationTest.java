@@ -23,12 +23,7 @@ public class CountriesDaoImplementationTest {
     // Dao with all CRUDs we test
     private CountriesDaoImplementation mCountriesDaoImplementation;
     // Test country with ABC code
-    private Country mTestCountryWithAbcCode = new Country.CountryBuilder("ABC")
-                .withName("Country")
-                .withAdultLiteracyRate(1.0)
-                .withInternetUsers(1.0)
-                .build();
-
+    private Country mTestCountryWithAbcCode;
 //    @BeforeClass
 //    public static void setUpSessionFactory() {
 //        // setting up session factory
