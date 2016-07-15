@@ -30,12 +30,12 @@ public class CountriesDaoImplementation implements CountriesDao {
     }
 
     @Override
-    public String add(Country country) {
+    public String save(Country country) {
         // Open a session
         Session session = mSessionFactory.openSession();
         // Begin a transaction
         session.beginTransaction();
-        // Use the session to add
+        // Use the session to save
         String code = (String) session.save(country);
         // Commit transaction
         session.getTransaction().commit();
