@@ -65,7 +65,7 @@ public class CountriesDaoImplementationTest {
     private void addTestCountryToDatabase() {
         mTestCountryWithAbcCode = new CountryBuilder("ABC")
                 .withName("Country")
-                .withAdultLiteracyRate(1.0)
+                .withAdultLiteracyRate(null)
                 .withInternetUsers(1.0)
                 .build();
        mCountriesDaoImplementation.add(mTestCountryWithAbcCode);
@@ -86,7 +86,7 @@ public class CountriesDaoImplementationTest {
         // Given empty testing database and test country with code "ABC"
         Country testCountryWithAbcCode = new CountryBuilder("ABC")
                 .withName("Country")
-                .withAdultLiteracyRate(1.0)
+                .withAdultLiteracyRate(null)
                 .withInternetUsers(1.0)
                 .build();
         // When we add a country
