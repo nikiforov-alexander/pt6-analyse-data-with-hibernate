@@ -189,4 +189,49 @@ public class DatabaseMenuPrompterTest {
         // Then Logger should return error message "not found"
         verify(mMockedLogger).setErrorMessage(contains("not found"));
     }
+
+    // Edit country tests
+
+
+    @Test
+    public void editingCountryChangesTestEntry() throws Exception {
+        // Given menu with DAO, pointing to test database with "ABC" country
+        addTestCountryToDatabase();
+        // When user is trying to edit country "ABC"
+        when(mMockedBufferedReader.readLine())
+                .thenReturn("3")
+                .thenReturn("ABC")
+                .thenReturn("New Name")
+                .thenReturn("null")
+                .thenReturn("2.0")
+                .thenReturn("0");
+        // actual menu call
+        mDatabaseMenuPrompter.presentMenuWithPossibleOptions();
+        // Then foundCountry should be equal to our test country
+        mTestCountryWithAbcCode.setName("New Name");
+        mTestCountryWithAbcCode.setInternetUsers(null);
+        mTestCountryWithAbcCode.setAdultLiteracyRate(2.0);
+        Country foundCountry =
+                mCountriesDaoImplementation.findCountryByCode("ABC");
+        assertEquals(mTestCountryWithAbcCode, foundCountry);
+        assertEquals(mTestCountryWithAbcCode.getInternetUsers(),
+                foundCountry.getInternetUsers());
+        assertEquals(mTestCountryWithAbcCode.getAdultLiteracyRate(),
+                foundCountry.getAdultLiteracyRate());
+    }
+    @Test
+    public void editingNonExistingCountryReturnsErrorMessage()
+            throws Exception {
+        // Given menu with DAO, pointing to test database with "ABC" country
+        addTestCountryToDatabase();
+        // When user is trying to edit country "ABC"
+        when(mMockedBufferedReader.readLine())
+                .thenReturn("3")
+                .thenReturn("BAC")
+                .thenReturn("0");
+        // actual menu call
+        mDatabaseMenuPrompter.presentMenuWithPossibleOptions();
+        // Then Logger should be invoked with not found message
+        verify(mMockedLogger).setErrorMessage(contains("not found"));
+    }
 }
