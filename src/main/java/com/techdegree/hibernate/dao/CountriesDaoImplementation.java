@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
+import java.util.OptionalDouble;
 
 public class CountriesDaoImplementation implements CountriesDao {
     private SessionFactory mSessionFactory;
@@ -85,5 +86,53 @@ public class CountriesDaoImplementation implements CountriesDao {
         session.close();
     }
 
+    public Double getMinimumAdultLiteracy() {
+        OptionalDouble minimumAdultLiteracyRate = findAll()
+                .stream()
+                .filter(country -> country.getAdultLiteracyRate() != null)
+                .mapToDouble(Country::getAdultLiteracyRate)
+                .min();
+        if (minimumAdultLiteracyRate.isPresent()) {
+            return minimumAdultLiteracyRate.getAsDouble();
+        } else {
+            return null;
+        }
+    }
+    public Double getMaximumAdultLiteracy() {
+        OptionalDouble maximumAdultLiteracyRate = findAll()
+                .stream()
+                .filter(country -> country.getAdultLiteracyRate() != null)
+                .mapToDouble(Country::getAdultLiteracyRate)
+                .max();
+        if (maximumAdultLiteracyRate.isPresent()) {
+            return maximumAdultLiteracyRate.getAsDouble();
+        } else {
+            return null;
+        }
+    }
+    public Double getMinimumInternetUsers() {
+        OptionalDouble minimumInternetUsers = findAll()
+                .stream()
+                .filter(country -> country.getInternetUsers() != null)
+                .mapToDouble(Country::getInternetUsers)
+                .min();
+        if (minimumInternetUsers.isPresent()) {
+            return minimumInternetUsers.getAsDouble();
+        } else {
+            return null;
+        }
+    }
+    public Double getMaximumInternetUsers() {
+        OptionalDouble maximumInternetUsers = findAll()
+                .stream()
+                .filter(country -> country.getInternetUsers() != null)
+                .mapToDouble(Country::getInternetUsers)
+                .max();
+        if (maximumInternetUsers.isPresent()) {
+            return maximumInternetUsers.getAsDouble();
+        } else {
+            return null;
+        }
+    }
 
 }
