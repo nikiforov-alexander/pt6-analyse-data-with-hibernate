@@ -128,12 +128,16 @@ public class Prompter {
     // @param menuName - name of Menu to print in parentheses before listing
     //                   actual menu items. Used for separating different Menus
     protected void printMenuItems(String menuName) throws IOException {
+        printEightyHyphensWithoutNewLine();
+        System.out.printf("%n");
         System.out.println("[" + menuName + "]: Here are your options:");
         for (Map.Entry<Integer,String> option: mMenu.entrySet()) {
             System.out.printf("     '%s' - %s %n",
                     option.getKey(),option.getValue());
         }
         System.out.println("[" + menuName + "]: What do you want to do?");
+        printEightyHyphensWithoutNewLine();
+        System.out.printf("%n");
     }
 
     // prompts user for id, using
