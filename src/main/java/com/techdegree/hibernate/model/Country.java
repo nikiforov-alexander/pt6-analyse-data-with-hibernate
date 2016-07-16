@@ -79,6 +79,7 @@ public class Country {
         return result;
     }
 
+    // used in toString() method, see below
     private String getStringFromDecimalToPrint(Double decimal) {
         if (decimal == null) {
             return "--";
