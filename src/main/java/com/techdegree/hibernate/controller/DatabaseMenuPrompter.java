@@ -55,7 +55,7 @@ public class DatabaseMenuPrompter extends Prompter {
     //      promptForStringWithPatternUntilUserInputMatchingOne.
     protected String promptForName() throws IOException {
         return promptForStringWithPatternUntilUserInputMatchingOne(
-                "^(?=([a-zA-Z]+)).{0,32}$",
+                "^(?=([a-zA-Z]+)).{1,32}$",
                 "Please type Name of the new country " +
                         "(0-32 letters, like 'Country')",
                 "Wrong name"
