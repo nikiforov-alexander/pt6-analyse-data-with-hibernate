@@ -1,11 +1,13 @@
 package com.techdegree.hibernate.dao;
 
 import com.techdegree.hibernate.model.Country;
+import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
+import java.util.OptionalDouble;
 
 public class CountriesDaoImplementation implements CountriesDao {
     private SessionFactory mSessionFactory;
@@ -30,12 +32,12 @@ public class CountriesDaoImplementation implements CountriesDao {
     }
 
     @Override
-    public String add(Country country) {
+    public String save(Country country) {
         // Open a session
         Session session = mSessionFactory.openSession();
         // Begin a transaction
         session.beginTransaction();
-        // Use the session to add
+        // Use the session to save
         String code = (String) session.save(country);
         // Commit transaction
         session.getTransaction().commit();
@@ -85,5 +87,77 @@ public class CountriesDaoImplementation implements CountriesDao {
         session.close();
     }
 
+    // The rest 5 methods are used to calculate statistics, they are subject
+    // to be moved to other layer, because this is database access layer
+
+    public Double getMinimumAdultLiteracy() {
+        OptionalDouble minimumAdultLiteracyRate = findAll()
+                .stream()
+                .filter(country -> country.getAdultLiteracyRate() != null)
+                .mapToDouble(Country::getAdultLiteracyRate)
+                .min();
+        if (minimumAdultLiteracyRate.isPresent()) {
+            return minimumAdultLiteracyRate.getAsDouble();
+        } else {
+            return null;
+        }
+    }
+    public Double getMaximumAdultLiteracy() {
+        OptionalDouble maximumAdultLiteracyRate = findAll()
+                .stream()
+                .filter(country -> country.getAdultLiteracyRate() != null)
+                .mapToDouble(Country::getAdultLiteracyRate)
+                .max();
+        if (maximumAdultLiteracyRate.isPresent()) {
+            return maximumAdultLiteracyRate.getAsDouble();
+        } else {
+            return null;
+        }
+    }
+    public Double getMinimumInternetUsers() {
+        OptionalDouble minimumInternetUsers = findAll()
+                .stream()
+                .filter(country -> country.getInternetUsers() != null)
+                .mapToDouble(Country::getInternetUsers)
+                .min();
+        if (minimumInternetUsers.isPresent()) {
+            return minimumInternetUsers.getAsDouble();
+        } else {
+            return null;
+        }
+    }
+    public Double getMaximumInternetUsers() {
+        OptionalDouble maximumInternetUsers = findAll()
+                .stream()
+                .filter(country -> country.getInternetUsers() != null)
+                .mapToDouble(Country::getInternetUsers)
+                .max();
+        if (maximumInternetUsers.isPresent()) {
+            return maximumInternetUsers.getAsDouble();
+        } else {
+            return null;
+        }
+    }
+    // get correlation coefficient using apache.math library and
+    // PearsonsCorrelation method.
+    public Double getCorrelationCoefficient() {
+        // create double arrays as input for correlation calculator
+        // by filtering only non-null values in both decimals
+        double[] internetUsers = findAll()
+                .stream()
+                .filter(country -> country.getInternetUsers() != null)
+                .filter(country -> country.getAdultLiteracyRate() != null)
+                .mapToDouble(Country::getInternetUsers)
+                .toArray();
+        double[] adultLiteracyRate = findAll()
+                .stream()
+                .filter(country -> country.getInternetUsers() != null)
+                .filter(country -> country.getAdultLiteracyRate() != null)
+                .mapToDouble(Country::getAdultLiteracyRate)
+                .toArray();
+        // actual correlation calculation
+        return new PearsonsCorrelation()
+                .correlation(internetUsers, adultLiteracyRate);
+    }
 
 }

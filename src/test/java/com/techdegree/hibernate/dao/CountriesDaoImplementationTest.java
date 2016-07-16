@@ -8,7 +8,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
@@ -23,12 +22,7 @@ public class CountriesDaoImplementationTest {
     // Dao with all CRUDs we test
     private CountriesDaoImplementation mCountriesDaoImplementation;
     // Test country with ABC code
-    private Country mTestCountryWithAbcCode = new Country.CountryBuilder("ABC")
-                .withName("Country")
-                .withAdultLiteracyRate(1.0)
-                .withInternetUsers(1.0)
-                .build();
-
+    private Country mTestCountryWithAbcCode;
 //    @BeforeClass
 //    public static void setUpSessionFactory() {
 //        // setting up session factory
@@ -65,10 +59,10 @@ public class CountriesDaoImplementationTest {
     private void addTestCountryToDatabase() {
         mTestCountryWithAbcCode = new CountryBuilder("ABC")
                 .withName("Country")
-                .withAdultLiteracyRate(1.0)
+                .withAdultLiteracyRate(null)
                 .withInternetUsers(1.0)
                 .build();
-       mCountriesDaoImplementation.add(mTestCountryWithAbcCode);
+       mCountriesDaoImplementation.save(mTestCountryWithAbcCode);
     }
     @Test
     public void findAllReturnsOneTestCountryWhenWeAddIt() throws Exception {
@@ -86,12 +80,12 @@ public class CountriesDaoImplementationTest {
         // Given empty testing database and test country with code "ABC"
         Country testCountryWithAbcCode = new CountryBuilder("ABC")
                 .withName("Country")
-                .withAdultLiteracyRate(1.0)
+                .withAdultLiteracyRate(null)
                 .withInternetUsers(1.0)
                 .build();
-        // When we add a country
+        // When we save a country
         String codeFromSave = mCountriesDaoImplementation
-                .add(testCountryWithAbcCode);
+                .save(testCountryWithAbcCode);
         // Then code of country should be returned
         assertEquals("ABC", codeFromSave);
     }
