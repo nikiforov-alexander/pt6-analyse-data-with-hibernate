@@ -1,6 +1,7 @@
 package com.techdegree.hibernate.dao;
 
 import com.techdegree.hibernate.model.Country;
+import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -86,6 +87,9 @@ public class CountriesDaoImplementation implements CountriesDao {
         session.close();
     }
 
+    // The rest 5 methods are used to calculate statistics, they are subject
+    // to be moved to other layer, because this is database access layer
+
     public Double getMinimumAdultLiteracy() {
         OptionalDouble minimumAdultLiteracyRate = findAll()
                 .stream()
@@ -133,6 +137,27 @@ public class CountriesDaoImplementation implements CountriesDao {
         } else {
             return null;
         }
+    }
+    // get correlation coefficient using apache.math library and
+    // PearsonsCorrelation method.
+    public Double getCorrelationCoefficient() {
+        // create double arrays as input for correlation calculator
+        // by filtering only non-null values in both decimals
+        double[] internetUsers = findAll()
+                .stream()
+                .filter(country -> country.getInternetUsers() != null)
+                .filter(country -> country.getAdultLiteracyRate() != null)
+                .mapToDouble(Country::getInternetUsers)
+                .toArray();
+        double[] adultLiteracyRate = findAll()
+                .stream()
+                .filter(country -> country.getInternetUsers() != null)
+                .filter(country -> country.getAdultLiteracyRate() != null)
+                .mapToDouble(Country::getAdultLiteracyRate)
+                .toArray();
+        // actual correlation calculation
+        return new PearsonsCorrelation()
+                .correlation(internetUsers, adultLiteracyRate);
     }
 
 }
