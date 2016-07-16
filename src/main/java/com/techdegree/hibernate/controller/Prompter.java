@@ -203,4 +203,14 @@ public class Prompter {
             System.out.printf("-");
         }
     }
+    // helpful print method replacing null with "--"
+    // and converting double to String
+    public String convertDoubleToStringReplacingNull(
+            Double decimal, String format) {
+        if (decimal == null) {
+            return "--";
+        } else {
+            return String.format(format, decimal);
+        }
+    }
 }
