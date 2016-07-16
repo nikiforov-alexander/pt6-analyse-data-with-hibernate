@@ -179,6 +179,10 @@ public class DatabaseMenuPrompter extends Prompter {
             foundCountry.setAdultLiteracyRate(adultLiteracyRate);
             // update found country
             mCountriesDaoImplementation.update(foundCountry);
+            // print success message
+            String successMessage = String.format("%s%n%s%s%n",
+                    "Country: ", foundCountry, "is updated");
+            mLogger.setSuccessMessage(successMessage);
         } else {
             mLogger.setErrorMessage("Country with this code is not found");
         }
@@ -194,6 +198,10 @@ public class DatabaseMenuPrompter extends Prompter {
         // if country is found, delete, if not print "Error"
         if (foundCountry != null) {
             mCountriesDaoImplementation.delete(foundCountry);
+            // print success message
+            String successMessage = String.format("%s%n%s%s%n",
+                    "Country: ", foundCountry, "is deleted from database");
+            mLogger.setSuccessMessage(successMessage);
         } else {
             mLogger.setErrorMessage("Country with this code is not found");
         }
@@ -218,6 +226,10 @@ public class DatabaseMenuPrompter extends Prompter {
                     .build();
             // save to database
             mCountriesDaoImplementation.save(country);
+            // print success message
+            String successMessage = String.format("%s%n%s%s%n",
+                    "Country: ", country, "is added to database");
+            mLogger.setSuccessMessage(successMessage);
         } else {
             mLogger.setErrorMessage("Country with this code already exists");
         }
