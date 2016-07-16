@@ -89,16 +89,35 @@ public class DatabaseMenuPrompter extends Prompter {
         }
     }
 
+    // used in showStatistics method
+    private void printStatisticDecimalNicely(String message,
+                                             Double decimal) {
+        System.out.printf("%40s %15s%n",
+                message,
+                convertDoubleToStringReplacingNull(decimal,"%15.2f"));
+    }
     // is executed upon "5: Shows statistics of database
     private void showStatistics() {
-        System.out.println("Min adult literacy rate is: " +
-                mCountriesDaoImplementation.getMinimumAdultLiteracy());
-        System.out.println("Max adult literacy rate is: " +
-                mCountriesDaoImplementation.getMaximumAdultLiteracy());
-        System.out.println("Min internet users is: " +
-                mCountriesDaoImplementation.getMinimumInternetUsers());
-        System.out.println("Max internet users is: " +
-                mCountriesDaoImplementation.getMaximumInternetUsers());
+        printStatisticDecimalNicely(
+                "Min adult literacy rate is: ",
+                mCountriesDaoImplementation.getMinimumAdultLiteracy()
+        );
+        printStatisticDecimalNicely(
+                "Max adult literacy rate is: ",
+                mCountriesDaoImplementation.getMaximumAdultLiteracy()
+        );
+        printStatisticDecimalNicely(
+                "Min internet users is: ",
+                mCountriesDaoImplementation.getMinimumInternetUsers()
+        );
+        printStatisticDecimalNicely(
+                "Max internet users is: ",
+                mCountriesDaoImplementation.getMaximumInternetUsers()
+        );
+        printStatisticDecimalNicely(
+                "Correlation coefficient is: ",
+                mCountriesDaoImplementation.getCorrelationCoefficient()
+        );
     }
 
     // is executed upon "4" : Show all countries in database
