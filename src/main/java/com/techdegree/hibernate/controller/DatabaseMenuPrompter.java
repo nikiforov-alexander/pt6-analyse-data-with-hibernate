@@ -206,6 +206,7 @@ public class DatabaseMenuPrompter extends Prompter {
         String code = promptForCode().toUpperCase();
         // if country with this code does not exist
         if (mCountriesDaoImplementation.findCountryByCode(code) == null) {
+            // prompt for other member variables
             String name = promptForName();
             Double internetUsers = promptForDecimal("Internet Users");
             Double adultLiteracyRate = promptForDecimal("Adult Literacy Rate");
