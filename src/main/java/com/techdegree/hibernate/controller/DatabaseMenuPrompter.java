@@ -202,7 +202,7 @@ public class DatabaseMenuPrompter extends Prompter {
     // @throws IOException - see
     //      promptFor.. methods
     private void addNewCountry() throws IOException {
-        // prompt for member variables
+        // prompt for code
         String code = promptForCode().toUpperCase();
         // if country with this code does not exist
         if (mCountriesDaoImplementation.findCountryByCode(code) == null) {
