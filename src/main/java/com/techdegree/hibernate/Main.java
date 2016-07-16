@@ -30,9 +30,12 @@ public class Main {
             new CountriesDaoImplementation(sessionFactory);
 
     public static void main(String[] args) throws IOException {
+        // create our main menu object, and pass DAO with database there
         DatabaseMenuPrompter databaseMenuPrompter =
                 new DatabaseMenuPrompter(mCountriesDaoImplementation);
         // run the menu
         databaseMenuPrompter.presentMenuWithPossibleOptions();
+        // close session factory
+        sessionFactory.close();
     }
 }
