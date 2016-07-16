@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.OptionalDouble;
 
 public class CountriesDaoImplementation implements CountriesDao {
+    // session factory is created outside of this class, so that we can
+    // have control which database to use: testing or real one
+    // It could be done better probably, I just didn't found how.
     private SessionFactory mSessionFactory;
 
     // constructor
@@ -27,7 +30,7 @@ public class CountriesDaoImplementation implements CountriesDao {
         List<Country> countries  = criteria.list();
         // Close session
         session.close();
-        // return id of newly created object in database
+        // return list of all countries in database
         return countries;
     }
 
@@ -43,7 +46,7 @@ public class CountriesDaoImplementation implements CountriesDao {
         session.getTransaction().commit();
         // Close session
         session.close();
-        // return id of newly created object in database
+        // return code of newly created object in database
         return code;
     }
 
@@ -89,6 +92,7 @@ public class CountriesDaoImplementation implements CountriesDao {
 
     // The rest 5 methods are used to calculate statistics, they are subject
     // to be moved to other layer, because this is database access layer
+    // but for now I'll leave them here, to have working prototype
 
     public Double getMinimumAdultLiteracy() {
         OptionalDouble minimumAdultLiteracyRate = findAll()

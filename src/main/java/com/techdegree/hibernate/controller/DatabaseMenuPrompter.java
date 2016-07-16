@@ -55,7 +55,7 @@ public class DatabaseMenuPrompter extends Prompter {
     //      promptForStringWithPatternUntilUserInputMatchingOne.
     protected String promptForName() throws IOException {
         return promptForStringWithPatternUntilUserInputMatchingOne(
-                "^(?=([a-zA-Z]+)).{0,32}$",
+                "^(?=([a-zA-Z]+)).{1,32}$",
                 "Please type Name of the new country " +
                         "(0-32 letters, like 'Country')",
                 "Wrong name"
@@ -67,19 +67,33 @@ public class DatabaseMenuPrompter extends Prompter {
     // @throws IOException - see
     //      promptForStringWithPatternUntilUserInputMatchingOne.
     protected Double promptForDecimal(String decimalName) throws IOException {
-        // can be "1", "1.", "1.23456789" max, the last digit will be added by
-        // me, also "1234567890", then I will save 1234567890.0
+        // can be "1", "1.", "1.23456789", "123" max or "123."
         // applied to both decimals
         // If user types 'null' then value will go to database as null,
         // or "--"
+        // see testing for more info about acceptable values
+        // @return Double - accepted Double value, or null
+        // we have group with three different type of decimals
+        // 1) [0-9]{0,3}\\.[0-9]+
+        //    possible values are :
+        //    normal decimal: 1.0 with as many digits as possible, like
+        //    1.234567890234, first 8 fractional numbers will be accepted,
+        //    the rest is truncated
+        // 2) [0-9]{1,3}+
+        //     possible values are 1, 12, 123, more than 4 digits are
+        //     rejected
+        // 3) [0-9]{1,3}\\.
+        //     possible values are 1., 12., 123., more than 4 - rejected
+        // NOTE: in all cases, trailing zeros are not allowed, numbers like
+        // 0000 will be rejected
         String acceptedDecimalValue =
                 promptForStringWithPatternUntilUserInputMatchingOne(
-                        "^(?=[0-9]+\\.[0-9]+|[0-9]+|[0-9]+\\.|null).{0,10}$",
-                        "Please type '" + decimalName + "' of the new country " +
-                                "(decimal or integer with max 10 digits, " +
-                                "like '1', '1.', '1.23456789' max or '1234567890' max " +
-                                "or type 'null' for absent value",
-                        "Wrong decimal"
+                    "^([0-9]{0,3}\\.[0-9]+|[0-9]{1,3}+|[0-9]{1,3}\\.|null)$",
+                    "Please type '" + decimalName + "' of the new country " +
+                            "(decimal or integer with max 3 digits in integer part, " +
+                            "like '1', '1.', '1.23456789'  or '123' max " +
+                            "or type 'null' for absent value",
+                    "Wrong decimal"
                 );
         if (acceptedDecimalValue.equals("null")) {
             return null;
@@ -128,12 +142,12 @@ public class DatabaseMenuPrompter extends Prompter {
                 "Internet Users",
                 "Literacy"
         );
-        printEightHyphensWithoutNewLine();
+        printEightyHyphensWithoutNewLine();
         System.out.printf("%n");
         // print countries in database
         mCountriesDaoImplementation
                 .findAll().forEach(System.out::println);
-        printEightHyphensWithoutNewLine();
+        printEightyHyphensWithoutNewLine();
         // print header
         System.out.printf("%n%7s %40s %15s %15s%n",
                 "Code",
@@ -146,7 +160,7 @@ public class DatabaseMenuPrompter extends Prompter {
     // is executed upon "3" : Edit option in Main Menu
     private void editCountry() throws IOException {
         // prompt user for Code
-        String code = promptForCode();
+        String code = promptForCode().toUpperCase();
         // try to find country
         Country foundCountry =
                 mCountriesDaoImplementation.findCountryByCode(code);
@@ -165,6 +179,10 @@ public class DatabaseMenuPrompter extends Prompter {
             foundCountry.setAdultLiteracyRate(adultLiteracyRate);
             // update found country
             mCountriesDaoImplementation.update(foundCountry);
+            // print success message
+            String successMessage = String.format("%s%n%s%s%n",
+                    "Country: ", foundCountry, "is updated");
+            mLogger.setSuccessMessage(successMessage);
         } else {
             mLogger.setErrorMessage("Country with this code is not found");
         }
@@ -173,13 +191,17 @@ public class DatabaseMenuPrompter extends Prompter {
     // @throws IOException because of prompt methods
     private void deleteCountryByCode() throws IOException {
         // prompt user for code
-        String code = promptForCode();
+        String code = promptForCode().toUpperCase();
         // try to find country by code
         Country foundCountry =
                 mCountriesDaoImplementation.findCountryByCode(code);
         // if country is found, delete, if not print "Error"
         if (foundCountry != null) {
             mCountriesDaoImplementation.delete(foundCountry);
+            // print success message
+            String successMessage = String.format("%s%n%s%s%n",
+                    "Country: ", foundCountry, "is deleted from database");
+            mLogger.setSuccessMessage(successMessage);
         } else {
             mLogger.setErrorMessage("Country with this code is not found");
         }
@@ -188,10 +210,11 @@ public class DatabaseMenuPrompter extends Prompter {
     // @throws IOException - see
     //      promptFor.. methods
     private void addNewCountry() throws IOException {
-        // prompt for member variables
-        String code = promptForCode();
+        // prompt for code
+        String code = promptForCode().toUpperCase();
         // if country with this code does not exist
         if (mCountriesDaoImplementation.findCountryByCode(code) == null) {
+            // prompt for other member variables
             String name = promptForName();
             Double internetUsers = promptForDecimal("Internet Users");
             Double adultLiteracyRate = promptForDecimal("Adult Literacy Rate");
@@ -203,6 +226,10 @@ public class DatabaseMenuPrompter extends Prompter {
                     .build();
             // save to database
             mCountriesDaoImplementation.save(country);
+            // print success message
+            String successMessage = String.format("%s%n%s%s%n",
+                    "Country: ", country, "is added to database");
+            mLogger.setSuccessMessage(successMessage);
         } else {
             mLogger.setErrorMessage("Country with this code already exists");
         }

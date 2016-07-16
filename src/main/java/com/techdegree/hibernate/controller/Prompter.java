@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +24,7 @@ public class Prompter {
     // e.g. success message, error message, hint message, etc.
     protected Logger mLogger;
 
-    // Map containing Menu Item -> Description, both Strings
+    // Map containing Menu Item -> Description
     protected Map<Integer, String> mMenu;
 
     // seems to be an overkill. But I've had a lot of tests ran into
@@ -129,43 +128,16 @@ public class Prompter {
     // @param menuName - name of Menu to print in parentheses before listing
     //                   actual menu items. Used for separating different Menus
     protected void printMenuItems(String menuName) throws IOException {
+        printEightyHyphensWithoutNewLine();
+        System.out.printf("%n");
         System.out.println("[" + menuName + "]: Here are your options:");
         for (Map.Entry<Integer,String> option: mMenu.entrySet()) {
             System.out.printf("     '%s' - %s %n",
                     option.getKey(),option.getValue());
         }
         System.out.println("[" + menuName + "]: What do you want to do?");
-    }
-
-    // generic method to print Set objects with ids, is executed before ask
-    // user for input
-    public void showAvailableObjectsWithIdsInSet(
-            Set<?> set, String nameOfSet, String nameOfObject) {
-        System.out.println("-- " + nameOfSet);
-        System.out.printf("'id' : '%s'%n",nameOfObject);
-        int id = 1;
-        // not lambda, unfortunately ...
-        for (Object object: set) {
-            System.out.printf("%2d: %s%n", id, object);
-            id++;
-        }
-        System.out.printf("'id' : '%s'%n",nameOfObject);
-        System.out.println("-- " + nameOfSet );
-    }
-    // checks that parsed int is in the range of 1 to set.size()
-    // It is natural for user to pick not from zero to size minus one.
-    // That's why we pass int with minus one to all child methods using it
-    // no IndexOutOfBounds is checked, may be in future
-    // @return - true if parsed int > 0 and less or equal than set.size()
-    //           upon false, error message is passed to Logger, and presented
-    //           to user
-    public boolean parsedIntIsInRangeOfGivenSet(int parsedInt, Set<?> set) {
-        if (parsedInt > 0 && parsedInt <= set.size()) {
-            return true;
-        } else {
-            mLogger.setErrorMessage("Number is not in the right range");
-            return false;
-        }
+        printEightyHyphensWithoutNewLine();
+        System.out.printf("%n");
     }
 
     // prompts user for id, using
@@ -184,21 +156,8 @@ public class Prompter {
         return Integer.parseInt(id);
     }
 
-    // function used to print map of objects in a very simple way, used in
-    // showHeightDistribution() and showExperienceDistribution() methods in
-    // TeamChangePrompter class.
-    // untested, because it is a view function
-    public void printMapOfObjectsWithMessage(Map<?,?> map, String message) {
-        System.out.println("---- " + message);
-        map.entrySet().stream().forEach(
-                object -> System.out.printf("%s: %s, ",
-                        object.getKey(),object.getValue())
-        );
-        System.out.printf("%n----%n");
-    }
-
     // helpful print method
-    public void printEightHyphensWithoutNewLine() {
+    public void printEightyHyphensWithoutNewLine() {
         for (int i = 1; i <= 80 ; i++) {
             System.out.printf("-");
         }

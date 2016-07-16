@@ -320,15 +320,17 @@ public class DatabaseMenuPrompterTest {
     }
     // testing error in decimal input, for both decimal fields
     @Test
-    public void promptForDecimalWorksOnlyWithThreeLetter() throws Exception {
+    public void promptForDecimalWorksOnlyWithThreeNumbersInIntegerPart() throws Exception {
         // Given menu with DAO, pointing to empty Database
         // When promptForDecimal method is called with following error cases
         when(mMockedBufferedReader.readLine())
                 .thenReturn("String")
                 .thenReturn(" ")
                 .thenReturn("")
-                .thenReturn("12345678901") // number with 11 digits no dots
-                .thenReturn("1.234567890") // decimal with 10 digits one dot
+                .thenReturn("1234") // number with 4 digits in should give an error
+                .thenReturn("1234.") // number with 4 digits and dot should give and error
+                .thenReturn("0001") // number with 4 digits but trailing zeros will not be accepted
+                .thenReturn(".") // one dot number is rejected
                 .thenReturn("1.0");
         // actual method call
         Double decimal = mDatabaseMenuPrompter.promptForDecimal("decimal name");
@@ -344,9 +346,10 @@ public class DatabaseMenuPrompterTest {
                 "1",
                 "1.",
                 "1.2",
-                "1234567890",
-                "1.23456789",
-                " 1.0 "
+                "123",
+                "123.",
+                ".123567890234567890",
+                " 1.0 ",
         };
         for (String validCountryDecimal : arrayOfValidCountryDecimals) {
             when(mMockedBufferedReader.readLine())
