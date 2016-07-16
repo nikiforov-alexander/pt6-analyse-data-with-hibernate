@@ -142,12 +142,12 @@ public class DatabaseMenuPrompter extends Prompter {
                 "Internet Users",
                 "Literacy"
         );
-        printEightHyphensWithoutNewLine();
+        printEightyHyphensWithoutNewLine();
         System.out.printf("%n");
         // print countries in database
         mCountriesDaoImplementation
                 .findAll().forEach(System.out::println);
-        printEightHyphensWithoutNewLine();
+        printEightyHyphensWithoutNewLine();
         // print header
         System.out.printf("%n%7s %40s %15s %15s%n",
                 "Code",
