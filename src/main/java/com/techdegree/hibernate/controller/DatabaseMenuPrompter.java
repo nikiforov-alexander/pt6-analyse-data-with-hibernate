@@ -67,19 +67,33 @@ public class DatabaseMenuPrompter extends Prompter {
     // @throws IOException - see
     //      promptForStringWithPatternUntilUserInputMatchingOne.
     protected Double promptForDecimal(String decimalName) throws IOException {
-        // can be "1", "1.", "1.23456789" max, the last digit will be added by
-        // me, also "1234567890", then I will save 1234567890.0
+        // can be "1", "1.", "1.23456789", "123" max or "123."
         // applied to both decimals
         // If user types 'null' then value will go to database as null,
         // or "--"
+        // see testing for more info about acceptable values
+        // @return Double - accepted Double value, or null
+        // we have group with three different type of decimals
+        // 1) [0-9]{0,3}\\.[0-9]+
+        //    possible values are :
+        //    normal decimal: 1.0 with as many digits as possible, like
+        //    1.234567890234, first 8 numbers will be accepted, the rest is
+        //    truncated
+        // 2) [0-9]{1,3}+
+        //     possible values are 1, 12, 123, more than 4 digits are
+        //     rejected
+        // 3) [0-9]{1,3}\\.
+        //     possible values are 1., 12., 123., more than 4 - rejected
+        // NOTE: in all cases, trailing zeros are not allowed, numbers like
+        // 0000 will be rejected
         String acceptedDecimalValue =
                 promptForStringWithPatternUntilUserInputMatchingOne(
-                        "^(?=[0-9]+\\.[0-9]+|[0-9]+|[0-9]+\\.|null).{0,10}$",
-                        "Please type '" + decimalName + "' of the new country " +
-                                "(decimal or integer with max 10 digits, " +
-                                "like '1', '1.', '1.23456789' max or '1234567890' max " +
-                                "or type 'null' for absent value",
-                        "Wrong decimal"
+                    "^([0-9]{0,3}\\.[0-9]+|[0-9]{1,3}+|[0-9]{1,3}\\.|null)$",
+                    "Please type '" + decimalName + "' of the new country " +
+                            "(decimal or integer with max 3 digits in integer part, " +
+                            "like '1', '1.', '1.23456789'  or '123' max " +
+                            "or type 'null' for absent value",
+                    "Wrong decimal"
                 );
         if (acceptedDecimalValue.equals("null")) {
             return null;
