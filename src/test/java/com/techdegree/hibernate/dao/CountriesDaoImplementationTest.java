@@ -14,6 +14,8 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+import org.hibernate.exception.DataException;
+
 public class CountriesDaoImplementationTest {
     // test configuration file
     private static final String TEST_CONFIGURATION_FILE = "hibernate-test.cfg.xml";
@@ -125,5 +127,36 @@ public class CountriesDaoImplementationTest {
         int sizeOfListOfCountriesInDataBase =
                 mCountriesDaoImplementation.findAll().size();
         assertEquals(0, sizeOfListOfCountriesInDataBase);
+    }
+
+    @Test(expected = DataException.class)
+    public void
+    decimalsWithMoreThanThreeNumberInIntegerPartWithoutTrailingZerosAreNotAcceptedByDatabaseSave()
+            throws Exception {
+        // Given testing database with no countries
+        // When we add decimal with 4 numbers in integer part
+        Country country = new Country.CountryBuilder("ABC")
+                .withName("Country")
+                .withAdultLiteracyRate(1234.)
+                .withInternetUsers(null)
+                .build();
+        mCountriesDaoImplementation.save(country);
+        // Then DataException is thrown
+    }
+
+    @Test
+    public void decimalsWithRightIntegerPartAndManyDecimalNumbersAreAcceptedBySave()
+            throws Exception {
+        // Given testing database with no countries
+        // When we add decimal with 3 numbers in integer part, and more than
+        // eight numbers in fractional part
+        Country country = new Country.CountryBuilder("ABC")
+                .withName("Country")
+                .withAdultLiteracyRate(123.4567890123345)
+                .withInternetUsers(null)
+                .build();
+        mCountriesDaoImplementation.save(country);
+        // Then these decimals are accepted by truncating
+        assertEquals(1, mCountriesDaoImplementation.findAll().size());
     }
 }
