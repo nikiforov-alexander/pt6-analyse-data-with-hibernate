@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.OptionalDouble;
 
 public class DatabaseMenuPrompter extends Prompter {
     // reference to our DAO accessing database, testing or real one
