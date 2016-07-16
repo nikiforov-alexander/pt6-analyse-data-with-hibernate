@@ -146,7 +146,7 @@ public class DatabaseMenuPrompter extends Prompter {
     // is executed upon "3" : Edit option in Main Menu
     private void editCountry() throws IOException {
         // prompt user for Code
-        String code = promptForCode();
+        String code = promptForCode().toUpperCase();
         // try to find country
         Country foundCountry =
                 mCountriesDaoImplementation.findCountryByCode(code);
@@ -173,7 +173,7 @@ public class DatabaseMenuPrompter extends Prompter {
     // @throws IOException because of prompt methods
     private void deleteCountryByCode() throws IOException {
         // prompt user for code
-        String code = promptForCode();
+        String code = promptForCode().toUpperCase();
         // try to find country by code
         Country foundCountry =
                 mCountriesDaoImplementation.findCountryByCode(code);
