@@ -77,8 +77,8 @@ public class DatabaseMenuPrompter extends Prompter {
         // 1) [0-9]{0,3}\\.[0-9]+
         //    possible values are :
         //    normal decimal: 1.0 with as many digits as possible, like
-        //    1.234567890234, first 8 numbers will be accepted, the rest is
-        //    truncated
+        //    1.234567890234, first 8 fractional numbers will be accepted,
+        //    the rest is truncated
         // 2) [0-9]{1,3}+
         //     possible values are 1, 12, 123, more than 4 digits are
         //     rejected
