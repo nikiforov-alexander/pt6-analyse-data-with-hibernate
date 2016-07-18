@@ -308,7 +308,7 @@
     User can type 3: `Edit` in main menu, to enter edit menu. 
     he will be asked for country Code. Country code has to be 
     three letters, can be lower cased, after the input letters
-    will be uppercased. If found contry will
+    will be uppercased. If contry will
     be found, user will be asked for the rest of parameters.
     This is primitive edit, where user can change only all the
     fields, there is no "default" or "back" options. Upon 
