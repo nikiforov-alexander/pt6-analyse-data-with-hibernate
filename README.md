@@ -229,7 +229,7 @@
     project with small modification. [DatabaseMenuPrompter] first is
     created with a reference to [CountriesDaoImplementation], that
     is reference to our database (For the structure of the project
-    see [Structure][structure]). [DatabaseMenuPrompter] runs in [Main] class
+    see [Structure](#structure)). [DatabaseMenuPrompter] runs in [Main] class
     using `presentMenuWithPossibleOptions` method. It presents 
     user with 6 options:
     - 0: `Exit`
