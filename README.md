@@ -342,7 +342,7 @@
     is solved at this level, when user is promted, his data is
     processed, so that it can later succesfully go to database.
 <hr>
-9. <a id="task-9"></a>
+10. <a id="task-10"></a>
     Write the application code that allows a user to delete a 
     country’s data.
     <hr>
@@ -356,4 +356,12 @@
     in [DatabaseMenuPrompter]. Actual delete in database is
     done in [CountriesDaoImplementation] method `delete`, like 
     all other database interactions.
+<hr>
+### Extra Credit
+11. <a id="task-11"></a>
+    Calculate a correlation coefficient between the two 
+    indicators without using a third-party library.
+    <hr>
+    Not realized. It is done using [PearsonsCorrelation], see
+    [Task 7](#task-7).
 <hr>
