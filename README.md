@@ -92,10 +92,15 @@
 <!--Links-->
 <!--External URLs-->
 [spark-blog-readme]: 
-    https://github.com/nikiforov-alexander/pt4-spark-blog#eclipse "Spark Blog README"
+    https://github.com/nikiforov-alexander/pt4-spark-blog#eclipse "https://github.com/nikiforov-alexander/pt4-spark-blog#eclipse"
 [soccer_league_organizer]:
-    https://github.com/nikiforov-alexander/pt2-soccer-league-organizer "Soccer League Organizer Project"
-
+    https://github.com/nikiforov-alexander/pt2-soccer-league-organizer "https://github.com/nikiforov-alexander/pt2-soccer-league-organizer"
+[PearsonsCorrelation]:
+    http://commons.apache.org/proper/commons-math/apidocs/org/apache/commons/math3/stat/correlation/PearsonsCorrelation.html "http://commons.apache.org/proper/commons-math/apidocs/org/apache/commons/math3/stat/correlation/PearsonsCorrelation.html"
+[apache_math3_library]:
+    https://mvnrepository.com/artifact/org.apache.commons/commons-math3 "https://mvnrepository.com/artifact/org.apache.commons/commons-math3"
+[stack_overflow_correlation_question]:
+   http://stackoverflow.com/questions/28428365/how-to-find-correlation-between-two-integer-arrays-in-java "http://stackoverflow.com/questions/28428365/how-to-find-correlation-between-two-integer-arrays-in-java"
 <!--Dirs-->
 [data]: data "data"
 [resources]: 
@@ -158,7 +163,6 @@
         in menu prompter
     - Apache math library, to calculate Correlation coefficient,
         see [Task 7](#task-7).
-
 <hr>
 3. <a id="task-3"></a>
     Create a data directory in your project. Save the downloaded 
@@ -239,10 +243,61 @@
         hibernate's session factory.
     - `Show all` option shows `code`, `name` and two decimals in 
         format: `%7s %40s %40s %15.2f %15.2f`. For more on that 
-        see `showAll()` method in [DatabaseMenuPrompter]
+        see `showAll()` method in [DatabaseMenuPrompter]. `null`
+        values are replaced by "--" Strings. It is achieved in
+        `toString()` method in [Country] class, which is used later
+        in printing each Country in `showAll` method.
         <br>
         NOTE: its not how it is presented in [data-table-sample.txt]
         file, simply because I wanted for country codes to be 
         shown as well, so that user can pick which country to
         edit, delete or remove by its code.
+<hr>
+7. <a id="task-7"></a>
+    Add to your console application the code that allows a user to 
+    view a list of statistics for each indicator, including (but 
+    not limited to) a maximum and minimum for each indicator, and 
+    a correlation coefficient for the two indicators together. 
+    You may use a third-party library to calculate the correlation 
+    coefficient. Keep in mind that all calculated statistics 
+    should exclude any country that doesn’t have data reported for 
+    the indicators under analysis (instead of using zero for 
+    missing values).
+    <hr>
+    The methods returning maxima and minima for both decimals are
+    situated in [CountriesDaoImplementation] method:
+    - `getMinimumAdultLiteracy()`
+    - `getMaximumAdultLiteracy()`
+    - `getMinimumInternetUsers()`
+    - `getMaximumInternetUsers()`
+    They filter countries by non-null values, map to Double
+    stream decimal parameter and then if value is found, return
+    `Double` or `null`
+    <hr>
+    Correlation coefficient is calculated using 
+    [PearsonsCorrelation] class in 
+    [Apache commons math3 library][apache_math3_library]
+    library. That was the first link that I've found upon googling,
+    in this 
+    [Stack overflow discussion][stack_overflow_correlation_question].
+    <br>
+    Just like with methods finding minima and maxima, I put this
+    method to `CountriesDaoImplementation` with name:
+    - `getCorrelationCoefficient()`
+    In this method at first all countries are filtered by non-null
+    values for both decimals, then mapped to array of doubles 
+    `double []`, that are inputs to `correlation` method of 
+    `PearsonsCorrelation()` class. The method throws
+    `DimensionMismatchException` and `MathIllegalArgumentException` 
+    because of possible arrays length mismatch, or length of arrays
+    less than 2. I ensure that first one is not the case by
+    filtering of both non-null decimals. The second one is handled
+    by printing stack trace and returning `null` and later simple
+    "--" printing.
+    <br>
+    Both minima maxima and correlation coefficient are shown
+    by choosing "5":`Show statistics` in main menu. 
+    In [DatabaseMenuPrompter] they are converted
+    to `String` replacing possible `null` values. See
+    `showStatistics` method implementation for more on that.
 <hr>
