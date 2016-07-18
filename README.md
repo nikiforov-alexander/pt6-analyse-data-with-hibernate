@@ -301,3 +301,25 @@
     to `String` replacing possible `null` values. See
     `showStatistics` method implementation for more on that.
 <hr>
+8. <a id="task-8"></a>
+    Write the application code that allows a user to edit a 
+    country’s data.
+    <hr>
+    User can type 3: `Edit` in main menu, to enter edit menu. 
+    he will be asked for country Code. Country code has to be 
+    three letters, can be lower cased, after the input letters
+    will be uppercased. If found contry will
+    be found, user will be asked for the rest of parameters.
+    This is primitive edit, where user can change only all the
+    fields, there is no "default" or "back" options. Upon 
+    successful edit, success message is printed. If country is
+    not found, error message appears, redirecting user back
+    to main menu. The possibility of `null` value is realized
+    by typing "null" for decimals only. For more see, 
+    `editCountry()`
+    in [DatabaseMenuPrompter]. Actual edit in database will be
+    done in [CountriesDaoImplementation] method `update`, like 
+    all other database interactions. Problem of wrong user inputs
+    is solved at this level, when user is promted, his data is
+    processed, so that it can later succesfully go to database.
+<hr>
