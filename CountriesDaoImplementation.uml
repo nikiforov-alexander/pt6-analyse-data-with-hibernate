@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.techdegree.hibernate.dao.CountriesDaoImplementation</OriginalElement>
+  <nodes>
+    <node x="211.5" y="440.0">com.techdegree.hibernate.dao.CountriesDaoImplementation</node>
+    <node x="-24.0" y="464.5">com.techdegree.hibernate.dao.CountriesDao</node>
+    <node x="630.0" y="-20.0">com.techdegree.hibernate.controller.Prompter</node>
+    <node x="218.5" y="280.5">com.techdegree.hibernate.Main</node>
+    <node x="1166.5" y="244.0">com.techdegree.hibernate.model.Country.CountryBuilder</node>
+    <node x="579.5" y="268.0">com.techdegree.hibernate.controller.DatabaseMenuPrompter</node>
+    <node x="1156.5" y="472.0">com.techdegree.hibernate.model.Country</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.techdegree.hibernate.model.Country.CountryBuilder" target="com.techdegree.hibernate.model.Country">
+      <point x="113.5" y="-0.0" />
+      <point x="1480.0" y="320.0" />
+      <point x="1480.0" y="560.0" />
+      <point x="123.5" y="-0.0" />
+    </edge>
+    <edge source="com.techdegree.hibernate.Main" target="com.techdegree.hibernate.controller.DatabaseMenuPrompter">
+      <point x="141.5" y="-0.0" />
+      <point x="-260.5" y="-0.0" />
+    </edge>
+    <edge source="com.techdegree.hibernate.controller.Prompter" target="com.techdegree.hibernate.controller.DatabaseMenuPrompter">
+      <point x="0.0" y="100.0" />
+      <point x="0.0" y="-52.0" />
+    </edge>
+    <edge source="com.techdegree.hibernate.dao.CountriesDaoImplementation" target="com.techdegree.hibernate.dao.CountriesDao">
+      <point x="-148.5" y="-0.0" />
+      <point x="64.0" y="-0.0" />
+    </edge>
+    <edge source="com.techdegree.hibernate.controller.DatabaseMenuPrompter" target="com.techdegree.hibernate.dao.CountriesDaoImplementation">
+      <point x="-40.0" y="52.0" />
+      <point x="800.0" y="480.0" />
+      <point x="148.5" y="-0.0" />
+    </edge>
+    <edge source="com.techdegree.hibernate.Main" target="com.techdegree.hibernate.dao.CountriesDaoImplementation">
+      <point x="-141.5" y="-0.0" />
+      <point x="160.0" y="320.0" />
+      <point x="160.0" y="460.0" />
+      <point x="-148.5" y="-20.0" />
+    </edge>
+    <edge source="com.techdegree.hibernate.controller.DatabaseMenuPrompter" target="com.techdegree.hibernate.model.Country.CountryBuilder">
+      <point x="260.5" y="-0.0" />
+      <point x="-113.5" y="-0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5000000000000001" x="376.9999999999998" y="330.9999999999999" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Inner Classes</Category>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

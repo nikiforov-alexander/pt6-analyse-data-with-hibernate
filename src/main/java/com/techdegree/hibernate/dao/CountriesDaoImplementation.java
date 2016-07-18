@@ -1,6 +1,8 @@
 package com.techdegree.hibernate.dao;
 
 import com.techdegree.hibernate.model.Country;
+import org.apache.commons.math3.exception.DimensionMismatchException;
+import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -160,8 +162,16 @@ public class CountriesDaoImplementation implements CountriesDao {
                 .mapToDouble(Country::getAdultLiteracyRate)
                 .toArray();
         // actual correlation calculation
-        return new PearsonsCorrelation()
-                .correlation(internetUsers, adultLiteracyRate);
+        Double correlation;
+        try {
+            correlation = new PearsonsCorrelation()
+                    .correlation(internetUsers, adultLiteracyRate);
+        } catch (MathIllegalArgumentException iae) {
+            iae.printStackTrace();
+            System.out.println("adult literacy rate and internet user arrays" +
+                    "are to small for the correlation to be calculated");
+            return null;
+        }
+        return correlation;
     }
-
 }
