@@ -330,7 +330,7 @@
     User can type 1: `Add` in main menu, to enter add menu. 
     he will be asked for country Code. Country code has to be 
     three letters, can be lower cased, after the input letters
-    will be uppercased. If found contry will
+    will be uppercased. If contry will
     be found, user will be returned to main menu with error.
     Upon successful add, success message is printed. 
     The possibility of `null` value is realized
