@@ -95,8 +95,14 @@
     https://github.com/nikiforov-alexander/pt4-spark-blog#eclipse "Spark Blog README"
 <!--Dirs-->
 [data]: data "data"
+[resources]: 
+    src/main/resources "src/main/resources" 
 <!--Files-->
 [worldbank.mv.db]: data/worldbank.mv.db "data/worldbank.mv.db"
+[hibernate.cfg.xml]: 
+    src/main/resources/hibernate.cfg.xml "src/main/resources/hibernate.cfg.xml"
+[hibernate-test.cfg.xml]: 
+    src/main/resources/hibernate-test.cfg.xml "src/main/resources/hibernate-test.cfg.xml"
 <!--Classes-->
 [Country]: 
     src/main/java/com/techdegree/hibernate/model/Country.java "src/main/java/com/techdegree/hibernate/model/Country.java"
@@ -163,7 +169,8 @@
         precision
     <hr>
     Model class [Country] is created. It is marked as `@Entity`,
-    connected to `@Table` name `Country` in database. 
+    connected to `@Table` name `Country` in database. It is 
+    added in mapping tag in [hibernate.cfg.xml] 
     - `mCode` member variable is marked as primary key with `@Id` 
         annotation, is set up with given above definition,
         is connected to `code` column in table.
@@ -176,4 +183,13 @@
     - `mAdultLiteracyRate` member variable is marked as `@Column`, is
         set up with definition above and 
         is connected to `adultLiteracyRate` column in table 
+<hr>
+5. <a id="task-5"></a>
+    The username for the supplied database is “sa” and there is no 
+    password.
+    <hr>
+    Settings for database are in [hibernate.cfg.xml] file in
+    [resources] directory.
+    [hibernate-test.cfg.xml] file in same directory is used in 
+    testing database.
 <hr>
