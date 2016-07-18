@@ -229,7 +229,7 @@
     project with small modification. [DatabaseMenuPrompter] first is
     created with a reference to [CountriesDaoImplementation], that
     is reference to our database (For the structure of the project
-    see [Structure]). [DatabaseMenuPrompter] runs in [Main] class
+    see [Structure][structure]). [DatabaseMenuPrompter] runs in [Main] class
     using `presentMenuWithPossibleOptions` method. It presents 
     user with 6 options:
     - 0: `Exit`
@@ -365,3 +365,15 @@
     Not realized. It is done using [PearsonsCorrelation], see
     [Task 7](#task-7).
 <hr>
+12. <a id="task-12"></a>
+    Use the builder pattern for creating new country objects.
+    <hr>
+    Done. See `CountryBuilder` class in [Country]
+13. <a id="task-13"></a>
+    Use Java streams for finding maxima and minima.
+    <hr>
+    Done. See min max methods referenced in [Task 7][task-7].
+
+<hr>
+### Misc
+### Structure of the project <a id="structure"></a>
