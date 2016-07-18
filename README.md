@@ -276,8 +276,8 @@
     <hr>
     Correlation coefficient is calculated using 
     [PearsonsCorrelation] class in 
-    [Apache commons math3 library][apache_math3_library]
-    library. That was the first link that I've found upon googling,
+    [Apache commons math3 library][apache_math3_library].
+    That was the first link that I've found upon googling,
     in this 
     [Stack overflow discussion][stack_overflow_correlation_question].
     <br>
