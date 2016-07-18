@@ -6,6 +6,9 @@
 * [Eclipse installation instructions.] (#eclipse)
 <hr>
 
+### Misc
+### [Structure of the project] (#structure)
+
 ### Tasks
 * [1.] (#task-1) 
     In the IDE of your choice, create a Gradle project and include the 
