@@ -308,7 +308,7 @@
     User can type 3: `Edit` in main menu, to enter edit menu. 
     he will be asked for country Code. Country code has to be 
     three letters, can be lower cased, after the input letters
-    will be uppercased. If contry will
+    will be uppercased. If country will
     be found, user will be asked for the rest of parameters.
     This is primitive edit, where user can change only all the
     fields, there is no "default" or "back" options. Upon 
@@ -330,7 +330,7 @@
     User can type 1: `Add` in main menu, to enter add menu. 
     he will be asked for country Code. Country code has to be 
     three letters, can be lower cased, after the input letters
-    will be uppercased. If contry will
+    will be uppercased. If country will
     be found, user will be returned to main menu with error.
     Upon successful add, success message is printed. 
     The possibility of `null` value is realized
@@ -349,7 +349,7 @@
     User can type 2: `Delete` in main menu, to enter delete menu. 
     He will be asked for country Code. Country code has to be 
     three letters, can be lower cased, after the input letters
-    will be uppercased. If contry will
+    will be uppercased. If country will
     be found, it will be deleted.
     Upon successful deletion, success message is printed. 
     For more see `deleteCountryByCode()`
