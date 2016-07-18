@@ -228,18 +228,19 @@
     see [Structure]). [DatabaseMenuPrompter] runs in [Main] class
     using `presentMenuWithPossibleOptions` method. It presents 
     user with 6 options:
-    0: `Exit`
-    1: `Add`
-    2: `Delete`
-    3: `Edit`
-    4: `Show all`
-    5: `Show statistics`
+    - 0: `Exit`
+    - 1: `Add`
+    - 2: `Delete`
+    - 3: `Edit`
+    - 4: `Show all`
+    - 5: `Show statistics`
     <hr>
     - `Exit` option is self-explanatory: quits database menu, closes
         hibernate's session factory.
     - `Show all` option shows `code`, `name` and two decimals in 
         format: `%7s %40s %40s %15.2f %15.2f`. For more on that 
         see `showAll()` method in [DatabaseMenuPrompter]
+        <br>
         NOTE: its not how it is presented in [data-table-sample.txt]
         file, simply because I wanted for country codes to be 
         shown as well, so that user can pick which country to
