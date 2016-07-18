@@ -168,8 +168,8 @@ public class CountriesDaoImplementation implements CountriesDao {
                     .correlation(internetUsers, adultLiteracyRate);
         } catch (MathIllegalArgumentException iae) {
             iae.printStackTrace();
-            System.out.println("adult literacy rate and internet user arrays" +
-                    "are to small for the correlation to be calculated");
+            System.out.println("Adult literacy rate and internet user arrays" +
+                    "are too small for the correlation to be calculated");
             return null;
         }
         return correlation;
