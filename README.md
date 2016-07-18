@@ -349,7 +349,7 @@
     User can type 2: `Delete` in main menu, to enter delete menu. 
     He will be asked for country Code. Country code has to be 
     three letters, can be lower cased, after the input letters
-    will be uppercased. If found contry will
+    will be uppercased. If contry will
     be found, it will be deleted.
     Upon successful deletion, success message is printed. 
     For more see `deleteCountryByCode()`
