@@ -323,3 +323,37 @@
     is solved at this level, when user is promted, his data is
     processed, so that it can later succesfully go to database.
 <hr>
+9. <a id="task-9"></a>
+    Write the application code that allows a user to add a 
+    country with data for each indicator.
+    <hr>
+    User can type 1: `Add` in main menu, to enter add menu. 
+    he will be asked for country Code. Country code has to be 
+    three letters, can be lower cased, after the input letters
+    will be uppercased. If found contry will
+    be found, user will be returned to main menu with error.
+    Upon successful add, success message is printed. 
+    The possibility of `null` value is realized
+    by typing "null" for decimals only. For more see, 
+    `addNewCountry()`
+    in [DatabaseMenuPrompter]. Actual add to database is
+    done in [CountriesDaoImplementation] method `save`, like 
+    all other database interactions. Problem of wrong user inputs
+    is solved at this level, when user is promted, his data is
+    processed, so that it can later succesfully go to database.
+<hr>
+9. <a id="task-9"></a>
+    Write the application code that allows a user to delete a 
+    country’s data.
+    <hr>
+    User can type 2: `Delete` in main menu, to enter delete menu. 
+    He will be asked for country Code. Country code has to be 
+    three letters, can be lower cased, after the input letters
+    will be uppercased. If found contry will
+    be found, it will be deleted.
+    Upon successful deletion, success message is printed. 
+    For more see `deleteCountryByCode()`
+    in [DatabaseMenuPrompter]. Actual delete in database is
+    done in [CountriesDaoImplementation] method `delete`, like 
+    all other database interactions.
+<hr>
