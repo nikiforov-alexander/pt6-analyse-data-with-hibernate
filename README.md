@@ -97,6 +97,9 @@
 [data]: data "data"
 <!--Files-->
 [worldbank.mv.db]: data/worldbank.mv.db "data/worldbank.mv.db"
+<!--Classes-->
+[Country]: 
+    src/main/java/com/techdegree/hibernate/model/Country.java "src/main/java/com/techdegree/hibernate/model/Country.java"
 
 ### Eclipse Installation instructions
 <hr> <a id="eclipse"></a>
@@ -131,8 +134,10 @@
     Both needed dependencies added, also following dependencies 
     added:
     - H2 database dependency, to be able to use database
-    - Mockito library, to mock `BufferedReader` in menu prompter
-    - Apache math library, to calculate Correlation coefficient.
+    - Mockito library, to mock user input through `BufferedReader` 
+        in menu prompter
+    - Apache math library, to calculate Correlation coefficient,
+        see [Task 7](#task-7).
 
 <hr>
 3. <a id="task-3"></a>
@@ -141,4 +146,34 @@
     <hr>
     H2 database is named [worldbank.mv.db] and is situated in 
     [data] directory.
+<hr>
+4. <a id="task-4"></a>
+    Create a model class that can be associated with the table of 
+    the given database. The data in the provided database includes 
+    one table named `Country`, and each row in that table contains 
+    the following columns:
+    - `code`: *VARCHAR(3)* - this is the primary key, a String with a 
+        maximum length of 3 characters
+    - `name`: *VARCHAR(32)* - a String with a maximum length of 32 
+        characters
+    - `internetUsers`: *DECIMAL(11,8)* - A number with a maximum 
+        length of 11 digits and 8 digits of decimal precision
+    - `adultLiteracyRate`: *DECIMAL(11,8)* - A number with a 
+        maximum length of 11 digits and 8 digits of decimal 
+        precision
+    <hr>
+    Model class [Country] is created. It is marked as `@Entity`,
+    connected to `@Table` name `Country` in database. 
+    - `mCode` member variable is marked as primary key with `@Id` 
+        annotation, is set up with given above definition,
+        is connected to `code` column in table.
+    - `mName` member variable is marked as `@Column`, is set up
+        with definition above and is
+        connected to `name` column in table 
+    - `mInternetUsers` member variable is marked as `@Column`, is
+        set up with definition above and 
+        is connected to `internetUsers` column in table 
+    - `mAdultLiteracyRate` member variable is marked as `@Column`, is
+        set up with definition above and 
+        is connected to `adultLiteracyRate` column in table 
 <hr>
