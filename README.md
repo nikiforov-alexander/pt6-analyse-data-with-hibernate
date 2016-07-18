@@ -93,6 +93,9 @@
 <!--External URLs-->
 [spark-blog-readme]: 
     https://github.com/nikiforov-alexander/pt4-spark-blog#eclipse "Spark Blog README"
+[soccer_league_organizer]:
+    https://github.com/nikiforov-alexander/pt2-soccer-league-organizer "Soccer League Organizer Project"
+
 <!--Dirs-->
 [data]: data "data"
 [resources]: 
@@ -103,9 +106,20 @@
     src/main/resources/hibernate.cfg.xml "src/main/resources/hibernate.cfg.xml"
 [hibernate-test.cfg.xml]: 
     src/main/resources/hibernate-test.cfg.xml "src/main/resources/hibernate-test.cfg.xml"
+[data-table-sample.txt]:
+   public-data/data-table-sample.txt "public-data/data-table-sample.txt"
 <!--Classes-->
 [Country]: 
     src/main/java/com/techdegree/hibernate/model/Country.java "src/main/java/com/techdegree/hibernate/model/Country.java"
+[DatabaseMenuPrompter]: 
+    src/main/java/com/techdegree/hibernate/controller/DatabaseMenuPrompter.java "src/main/java/com/techdegree/hibernate/controller/DatabaseMenuPrompter.java"
+[Prompter]: 
+    src/main/java/com/techdegree/hibernate/controller/Prompter.java "src/main/java/com/techdegree/hibernate/controller/Prompter.java"
+[CountriesDaoImplementation]: 
+    src/main/java/com/techdegree/hibernate/dao/CountriesDaoImplementation.java "src/main/java/com/techdegree/hibernate/dao/CountriesDaoImplementation.java"
+[Main]: 
+    src/main/java/com/techdegree/hibernate/Main.java "src/main/java/com/techdegree/hibernate/Main.java"
+
 
 ### Eclipse Installation instructions
 <hr> <a id="eclipse"></a>
@@ -192,4 +206,42 @@
     [resources] directory.
     [hibernate-test.cfg.xml] file in same directory is used in 
     testing database.
+<hr>
+6. <a id="task-6"></a>
+    Write the application code for a console application that 
+    allows a user to view a list of well-formatted data for 
+    all countries. This should be formatted in columns, contain 
+    column headings, and numbers should be rounded to the nearest 
+    hundredth. For any data that is unreported 
+    (NULL in the database), this should be clear in the displayed 
+    table. Please reference the provided example for data 
+    formatting.
+    <hr>
+    In order to assist user in console the [DatabaseMenuPrompter] 
+    class is created, it inherits [Prompter] class with basic
+    functionality, like, simple prompting and printing. It is 
+    a copy of class created in 
+    [Soccer League Organizer][soccer_league_organizer]
+    project with small modification. [DatabaseMenuPrompter] first is
+    created with a reference to [CountriesDaoImplementation], that
+    is reference to our database (For the structure of the project
+    see [Structure]). [DatabaseMenuPrompter] runs in [Main] class
+    using `presentMenuWithPossibleOptions` method. It presents 
+    user with 6 options:
+    0: `Exit`
+    1: `Add`
+    2: `Delete`
+    3: `Edit`
+    4: `Show all`
+    5: `Show statistics`
+    <hr>
+    - `Exit` option is self-explanatory: quits database menu, closes
+        hibernate's session factory.
+    - `Show all` option shows `code`, `name` and two decimals in 
+        format: `%7s %40s %40s %15.2f %15.2f`. For more on that 
+        see `showAll()` method in [DatabaseMenuPrompter]
+        NOTE: its not how it is presented in [data-table-sample.txt]
+        file, simply because I wanted for country codes to be 
+        shown as well, so that user can pick which country to
+        edit, delete or remove by its code.
 <hr>
