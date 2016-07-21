@@ -110,26 +110,26 @@ public class DatabaseMenuPrompter extends Prompter {
     }
     // is executed upon "5: Shows statistics of database
     private void showStatistics() {
-//        printStatisticDecimalNicely(
-//                "Min adult literacy rate is: ",
-//                mCountriesDao.getMinimumAdultLiteracy()
-//        );
-//        printStatisticDecimalNicely(
-//                "Max adult literacy rate is: ",
-//                mCountriesDao.getMaximumAdultLiteracy()
-//        );
-//        printStatisticDecimalNicely(
-//                "Min internet users is: ",
-//                mCountriesDao.getMinimumInternetUsers()
-//        );
-//        printStatisticDecimalNicely(
-//                "Max internet users is: ",
-//                mCountriesDao.getMaximumInternetUsers()
-//        );
-//        printStatisticDecimalNicely(
-//                "Correlation coefficient is: ",
-//                mCountriesDao.getCorrelationCoefficient()
-//        );
+        printStatisticDecimalNicely(
+                "Min adult literacy rate is: ",
+                mCountriesDao.getMinimumAdultLiteracy()
+        );
+        printStatisticDecimalNicely(
+                "Max adult literacy rate is: ",
+                mCountriesDao.getMaximumAdultLiteracy()
+        );
+        printStatisticDecimalNicely(
+                "Min internet users is: ",
+                mCountriesDao.getMinimumInternetUsers()
+        );
+        printStatisticDecimalNicely(
+                "Max internet users is: ",
+                mCountriesDao.getMaximumInternetUsers()
+        );
+        printStatisticDecimalNicely(
+                "Correlation coefficient is: ",
+                mCountriesDao.getCorrelationCoefficient()
+        );
     }
 
     // is executed upon "4" : Show all countries in database
