@@ -189,6 +189,7 @@ public class CountriesDaoImplementation implements CountriesDao {
         return correlation;
     }
 
+    @Override
     public void close() {
         mSessionFactory.close();
     }
