@@ -1,6 +1,6 @@
 package com.techdegree.hibernate.controller;
 
-import com.techdegree.hibernate.dao.CountriesDaoImplementation;
+import com.techdegree.hibernate.dao.CountriesDao;
 import com.techdegree.hibernate.model.Country;
 
 import java.io.BufferedReader;
@@ -10,27 +10,26 @@ import java.util.HashMap;
 
 public class DatabaseMenuPrompter extends Prompter {
     // reference to our DAO accessing database, testing or real one
-    private CountriesDaoImplementation mCountriesDaoImplementation;
+    private CountriesDao mCountriesDao;
 
     // constructor is used in testing
     protected DatabaseMenuPrompter(
             BufferedReader bufferedReader,
             Logger logger,
-            CountriesDaoImplementation countriesDaoImplementation) {
+            CountriesDao countriesDao) {
         mBufferedReader = bufferedReader;
         mLogger = logger;
-        mCountriesDaoImplementation = countriesDaoImplementation;
+        mCountriesDao = countriesDao;
         mMenu = new HashMap<>();
         fillMenuMapWithOptions();
     }
     // used in addNewCountry method
     // default constructor used in real app with new Reader and Logger
     // and real database DAO from Main
-    public DatabaseMenuPrompter(
-            CountriesDaoImplementation countriesDaoImplementation) {
+    public DatabaseMenuPrompter(CountriesDao countriesDao) {
         this(new BufferedReader(new InputStreamReader(System.in)),
                 new Logger(),
-                countriesDaoImplementation);
+                countriesDao);
     }
 
 
@@ -111,26 +110,26 @@ public class DatabaseMenuPrompter extends Prompter {
     }
     // is executed upon "5: Shows statistics of database
     private void showStatistics() {
-        printStatisticDecimalNicely(
-                "Min adult literacy rate is: ",
-                mCountriesDaoImplementation.getMinimumAdultLiteracy()
-        );
-        printStatisticDecimalNicely(
-                "Max adult literacy rate is: ",
-                mCountriesDaoImplementation.getMaximumAdultLiteracy()
-        );
-        printStatisticDecimalNicely(
-                "Min internet users is: ",
-                mCountriesDaoImplementation.getMinimumInternetUsers()
-        );
-        printStatisticDecimalNicely(
-                "Max internet users is: ",
-                mCountriesDaoImplementation.getMaximumInternetUsers()
-        );
-        printStatisticDecimalNicely(
-                "Correlation coefficient is: ",
-                mCountriesDaoImplementation.getCorrelationCoefficient()
-        );
+//        printStatisticDecimalNicely(
+//                "Min adult literacy rate is: ",
+//                mCountriesDao.getMinimumAdultLiteracy()
+//        );
+//        printStatisticDecimalNicely(
+//                "Max adult literacy rate is: ",
+//                mCountriesDao.getMaximumAdultLiteracy()
+//        );
+//        printStatisticDecimalNicely(
+//                "Min internet users is: ",
+//                mCountriesDao.getMinimumInternetUsers()
+//        );
+//        printStatisticDecimalNicely(
+//                "Max internet users is: ",
+//                mCountriesDao.getMaximumInternetUsers()
+//        );
+//        printStatisticDecimalNicely(
+//                "Correlation coefficient is: ",
+//                mCountriesDao.getCorrelationCoefficient()
+//        );
     }
 
     // is executed upon "4" : Show all countries in database
@@ -145,7 +144,7 @@ public class DatabaseMenuPrompter extends Prompter {
         printEightyHyphensWithoutNewLine();
         System.out.printf("%n");
         // print countries in database
-        mCountriesDaoImplementation
+        mCountriesDao
                 .findAll().forEach(System.out::println);
         printEightyHyphensWithoutNewLine();
         // print header
@@ -163,7 +162,7 @@ public class DatabaseMenuPrompter extends Prompter {
         String code = promptForCode().toUpperCase();
         // try to find country
         Country foundCountry =
-                mCountriesDaoImplementation.findCountryByCode(code);
+                mCountriesDao.findCountryByCode(code);
         // if country is found, update with all fields, else print error
         if (foundCountry != null) {
             // Since it was not specifically mentioned I will provide basic
@@ -178,7 +177,7 @@ public class DatabaseMenuPrompter extends Prompter {
             foundCountry.setInternetUsers(internetUsers);
             foundCountry.setAdultLiteracyRate(adultLiteracyRate);
             // update found country
-            mCountriesDaoImplementation.update(foundCountry);
+            mCountriesDao.update(foundCountry);
             // print success message
             String successMessage = String.format("%s%n%s%s%n",
                     "Country: ", foundCountry, "is updated");
@@ -194,10 +193,10 @@ public class DatabaseMenuPrompter extends Prompter {
         String code = promptForCode().toUpperCase();
         // try to find country by code
         Country foundCountry =
-                mCountriesDaoImplementation.findCountryByCode(code);
+                mCountriesDao.findCountryByCode(code);
         // if country is found, delete, if not print "Error"
         if (foundCountry != null) {
-            mCountriesDaoImplementation.delete(foundCountry);
+            mCountriesDao.delete(foundCountry);
             // print success message
             String successMessage = String.format("%s%n%s%s%n",
                     "Country: ", foundCountry, "is deleted from database");
@@ -213,7 +212,7 @@ public class DatabaseMenuPrompter extends Prompter {
         // prompt for code
         String code = promptForCode().toUpperCase();
         // if country with this code does not exist
-        if (mCountriesDaoImplementation.findCountryByCode(code) == null) {
+        if (mCountriesDao.findCountryByCode(code) == null) {
             // prompt for other member variables
             String name = promptForName();
             Double internetUsers = promptForDecimal("Internet Users");
@@ -225,7 +224,7 @@ public class DatabaseMenuPrompter extends Prompter {
                     .withAdultLiteracyRate(adultLiteracyRate)
                     .build();
             // save to database
-            mCountriesDaoImplementation.save(country);
+            mCountriesDao.save(country);
             // print success message
             String successMessage = String.format("%s%n%s%s%n",
                     "Country: ", country, "is added to database");
