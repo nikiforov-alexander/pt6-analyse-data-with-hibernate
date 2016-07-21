@@ -19,43 +19,22 @@ import org.hibernate.exception.DataException;
 public class CountriesDaoImplementationTest {
     // test configuration file
     private static final String TEST_CONFIGURATION_FILE = "hibernate-test.cfg.xml";
-    // static session factory initialized in @BeforeClass
-    private static SessionFactory mSessionFactory;
     // Dao with all CRUDs we test
     private CountriesDaoImplementation mCountriesDaoImplementation;
     // Test country with ABC code
     private Country mTestCountryWithAbcCode;
-//    @BeforeClass
-//    public static void setUpSessionFactory() {
-//        // setting up session factory
-//        final ServiceRegistry serviceRegistry =
-//                new StandardServiceRegistryBuilder()
-//                        .configure(TEST_CONFIGURATION_FILE)
-//                        .build();
-//        mSessionFactory =
-//                new MetadataSources(serviceRegistry)
-//                .buildMetadata()
-//                .buildSessionFactory();
-//    }
+
+    // before each test we set up database, by opening session factory
     @Before
     public void setUp() throws Exception {
-        // setting up session factory
-        final ServiceRegistry serviceRegistry =
-                new StandardServiceRegistryBuilder()
-                        .configure(TEST_CONFIGURATION_FILE)
-                        .build();
-        mSessionFactory =
-                new MetadataSources(serviceRegistry)
-                .buildMetadata()
-                .buildSessionFactory();
        // setting up DAO with our session factory
        mCountriesDaoImplementation = new
-               CountriesDaoImplementation(mSessionFactory);
+               CountriesDaoImplementation(TEST_CONFIGURATION_FILE);
     }
-
+    // and after each test we close session factory
     @After
     public void tearDown() throws Exception {
-        mSessionFactory.close();
+        mCountriesDaoImplementation.close();
     }
 
     private void addTestCountryToDatabase() {

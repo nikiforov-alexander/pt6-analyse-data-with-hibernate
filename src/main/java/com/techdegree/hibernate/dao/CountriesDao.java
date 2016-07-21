@@ -5,9 +5,10 @@ import com.techdegree.hibernate.model.Country;
 import java.util.List;
 
 public interface CountriesDao {
-    public List<Country> findAll();
-    public String save(Country country);
-    public Country findCountryByCode(String code);
-    public void update(Country country);
-    public void delete(Country country);
+    List<Country> findAll();
+    String save(Country country);
+    Country findCountryByCode(String code);
+    void update(Country country);
+    void delete(Country country);
+    void close();
 }
