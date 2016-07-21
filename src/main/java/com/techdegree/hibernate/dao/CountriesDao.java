@@ -11,4 +11,9 @@ public interface CountriesDao {
     void update(Country country);
     void delete(Country country);
     void close();
+    Double getMinimumAdultLiteracy();
+    Double getMaximumAdultLiteracy();
+    Double getMinimumInternetUsers();
+    Double getMaximumInternetUsers();
+    Double getCorrelationCoefficient();
 }

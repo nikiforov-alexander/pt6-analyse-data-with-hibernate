@@ -109,7 +109,7 @@ public class CountriesDaoImplementation implements CountriesDao {
     // The rest 5 methods are used to calculate statistics, they are subject
     // to be moved to other layer, because this is database access layer
     // but for now I'll leave them here, to have working prototype
-
+    @Override
     public Double getMinimumAdultLiteracy() {
         OptionalDouble minimumAdultLiteracyRate = findAll()
                 .stream()
@@ -122,6 +122,7 @@ public class CountriesDaoImplementation implements CountriesDao {
             return null;
         }
     }
+    @Override
     public Double getMaximumAdultLiteracy() {
         OptionalDouble maximumAdultLiteracyRate = findAll()
                 .stream()
@@ -134,6 +135,7 @@ public class CountriesDaoImplementation implements CountriesDao {
             return null;
         }
     }
+    @Override
     public Double getMinimumInternetUsers() {
         OptionalDouble minimumInternetUsers = findAll()
                 .stream()
@@ -146,6 +148,7 @@ public class CountriesDaoImplementation implements CountriesDao {
             return null;
         }
     }
+    @Override
     public Double getMaximumInternetUsers() {
         OptionalDouble maximumInternetUsers = findAll()
                 .stream()
@@ -160,6 +163,7 @@ public class CountriesDaoImplementation implements CountriesDao {
     }
     // get correlation coefficient using apache.math library and
     // PearsonsCorrelation method.
+    @Override
     public Double getCorrelationCoefficient() {
         // create double arrays as input for correlation calculator
         // by filtering only non-null values in both decimals
