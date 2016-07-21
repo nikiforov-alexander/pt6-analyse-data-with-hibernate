@@ -1,11 +1,8 @@
 package com.techdegree.hibernate.controller;
 
+import com.techdegree.hibernate.dao.CountriesDao;
 import com.techdegree.hibernate.dao.CountriesDaoImplementation;
 import com.techdegree.hibernate.model.Country;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.service.ServiceRegistry;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,10 +19,8 @@ import static org.junit.Assert.*;
 public class DatabaseMenuPrompterTest {
     // test configuration file
     private static final String TEST_CONFIGURATION_FILE = "hibernate-test.cfg.xml";
-    // static session factory initialized in @BeforeClass
-    private static SessionFactory mSessionFactory;
     // Dao with all CRUDs we test
-    private CountriesDaoImplementation mCountriesDaoImplementation;
+    private CountriesDao mCountriesDao;
     // Test country with ABC code
     private Country mTestCountryWithAbcCode = new Country.CountryBuilder("ABC")
             .withName("Country")
@@ -52,18 +47,9 @@ public class DatabaseMenuPrompterTest {
 
     @Before
     public void setUp() throws Exception {
-        // setting up session factory
-        final ServiceRegistry serviceRegistry =
-                new StandardServiceRegistryBuilder()
-                        .configure(TEST_CONFIGURATION_FILE)
-                        .build();
-        mSessionFactory =
-                new MetadataSources(serviceRegistry)
-                        .buildMetadata()
-                        .buildSessionFactory();
         // setting up DAO with our session factory
-        mCountriesDaoImplementation = new
-                CountriesDaoImplementation(mSessionFactory);
+        mCountriesDao = new
+                CountriesDaoImplementation(TEST_CONFIGURATION_FILE);
         // create mocked BufferedReader
         mMockedBufferedReader = mock(BufferedReader.class);
         // create mocked Logger
@@ -74,13 +60,13 @@ public class DatabaseMenuPrompterTest {
                 new DatabaseMenuPrompter(
                         mMockedBufferedReader,
                         mMockedLogger,
-                        mCountriesDaoImplementation);
+                        mCountriesDao);
         //
     }
 
     @After
     public void tearDown() throws Exception {
-        mSessionFactory.close();
+        mCountriesDao.close();
     }
 
     private void addTestCountryToDatabase() {
@@ -89,7 +75,7 @@ public class DatabaseMenuPrompterTest {
                 .withAdultLiteracyRate(null)
                 .withInternetUsers(1.0)
                 .build();
-        mCountriesDaoImplementation.save(mTestCountryWithAbcCode);
+        mCountriesDao.save(mTestCountryWithAbcCode);
     }
 
     // Country addition tests
@@ -114,7 +100,7 @@ public class DatabaseMenuPrompterTest {
         mDatabaseMenuPrompter.presentMenuWithPossibleOptions();
         // Then new country should be in database
         Country countryFromDataBase =
-                mCountriesDaoImplementation.findCountryByCode("BDC");
+                mCountriesDao.findCountryByCode("BDC");
         assertEquals(country, countryFromDataBase);
     }
     @Test
@@ -172,7 +158,7 @@ public class DatabaseMenuPrompterTest {
         // actual menu call
         mDatabaseMenuPrompter.presentMenuWithPossibleOptions();
         // Then no country with ABC should be found
-        assertNull(mCountriesDaoImplementation.findCountryByCode("ABC"));
+        assertNull(mCountriesDao.findCountryByCode("ABC"));
     }
     @Test
     public void deletingNotExistingCountryFromDatabaseGivesError()
@@ -212,7 +198,7 @@ public class DatabaseMenuPrompterTest {
         mTestCountryWithAbcCode.setInternetUsers(null);
         mTestCountryWithAbcCode.setAdultLiteracyRate(2.0);
         Country foundCountry =
-                mCountriesDaoImplementation.findCountryByCode("ABC");
+                mCountriesDao.findCountryByCode("ABC");
         assertEquals(mTestCountryWithAbcCode, foundCountry);
         assertEquals(mTestCountryWithAbcCode.getInternetUsers(),
                 foundCountry.getInternetUsers());
