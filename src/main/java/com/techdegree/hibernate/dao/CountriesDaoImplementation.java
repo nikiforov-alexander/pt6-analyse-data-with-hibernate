@@ -1,25 +1,39 @@
 package com.techdegree.hibernate.dao;
 
 import com.techdegree.hibernate.model.Country;
-import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.service.ServiceRegistry;
 
 import java.util.List;
 import java.util.OptionalDouble;
 
 public class CountriesDaoImplementation implements CountriesDao {
-    // session factory is created outside of this class, so that we can
-    // have control which database to use: testing or real one
-    // It could be done better probably, I just didn't found how.
-    private SessionFactory mSessionFactory;
+    // final session factory
+    private final SessionFactory mSessionFactory;
+    // database configuration file, sets in constructor
+    private final String mHibernateConfigurationFile;
 
+    // build session factory, used in constructor
+    private SessionFactory buildSessionFactory() {
+        // Create a standard service registry object
+        final ServiceRegistry serviceRegistry =
+                new StandardServiceRegistryBuilder()
+                        .configure(mHibernateConfigurationFile)
+                        .build();
+        return new MetadataSources(serviceRegistry)
+                .buildMetadata()
+                .buildSessionFactory();
+    }
     // constructor
-    public CountriesDaoImplementation(SessionFactory sessionFactory) {
-        mSessionFactory = sessionFactory;
+    public CountriesDaoImplementation(String hibernateConfigurationFile) {
+        mHibernateConfigurationFile = hibernateConfigurationFile;
+        mSessionFactory = buildSessionFactory();
     }
     @Override
     @SuppressWarnings("unchecked")
@@ -173,5 +187,9 @@ public class CountriesDaoImplementation implements CountriesDao {
             return null;
         }
         return correlation;
+    }
+
+    public void close() {
+        mSessionFactory.close();
     }
 }
