@@ -4,10 +4,14 @@
 ### Table of Contents
 ### Installation instructions
 * [Eclipse installation instructions.] (#eclipse)
+
 <hr>
 
 ### Misc
-### [Structure of the project] (#structure)
+- [Structure of the project] (#structure)
+- [Quick Links to files and directories] (#links)
+
+<hr>
 
 ### Tasks
 * [1.] (#task-1) 
@@ -123,6 +127,8 @@
     src/main/java/com/techdegree/hibernate/controller/DatabaseMenuPrompter.java "src/main/java/com/techdegree/hibernate/controller/DatabaseMenuPrompter.java"
 [Prompter]: 
     src/main/java/com/techdegree/hibernate/controller/Prompter.java "src/main/java/com/techdegree/hibernate/controller/Prompter.java"
+[CountriesDao]: 
+    src/main/java/com/techdegree/hibernate/dao/CountriesDao.java "src/main/java/com/techdegree/hibernate/dao/CountriesDao.java"
 [CountriesDaoImplementation]: 
     src/main/java/com/techdegree/hibernate/dao/CountriesDaoImplementation.java "src/main/java/com/techdegree/hibernate/dao/CountriesDaoImplementation.java"
 [Main]: 
@@ -268,7 +274,8 @@
     missing values).
     <hr>
     The methods returning maxima and minima for both decimals are
-    situated in [CountriesDaoImplementation] method:
+    situated in [CountriesDaoImplementation] method, and interfaced
+    in [CountriesDao]:
     - `getMinimumAdultLiteracy()`
     - `getMaximumAdultLiteracy()`
     - `getMinimumInternetUsers()`
@@ -285,7 +292,8 @@
     [Stack overflow discussion][stack_overflow_correlation_question].
     <br>
     Just like with methods finding minima and maxima, I put this
-    method to `CountriesDaoImplementation` with name:
+    method to [CountriesDaoImplementation] interfaced through 
+    [CountriesDao] with name:
     - `getCorrelationCoefficient()`
     In this method at first all countries are filtered by non-null
     values for both decimals, then mapped to array of doubles 
@@ -321,7 +329,8 @@
     by typing "null" for decimals only. For more see, 
     `editCountry()`
     in [DatabaseMenuPrompter]. Actual edit in database will be
-    done in [CountriesDaoImplementation] method `update`, like 
+    done in [CountriesDaoImplementation] method `update`, interfaced
+    through [CountriesDao] like 
     all other database interactions. Problem of wrong user inputs
     is solved at this level, when user is promted, his data is
     processed, so that it can later succesfully go to database.
@@ -340,7 +349,8 @@
     by typing "null" for decimals only. For more see, 
     `addNewCountry()`
     in [DatabaseMenuPrompter]. Actual add to database is
-    done in [CountriesDaoImplementation] method `save`, like 
+    done in [CountriesDaoImplementation] method `save`, 
+    interfaced through [CountriesDao], like 
     all other database interactions. Problem of wrong user inputs
     is solved at this level, when user is promted, his data is
     processed, so that it can later succesfully go to database.
@@ -357,7 +367,8 @@
     Upon successful deletion, success message is printed. 
     For more see `deleteCountryByCode()`
     in [DatabaseMenuPrompter]. Actual delete in database is
-    done in [CountriesDaoImplementation] method `delete`, like 
+    done in [CountriesDaoImplementation] method `delete`, 
+    interfaced through [CountriesDao], like 
     all other database interactions.
 <hr>
 ### Extra Credit
@@ -379,22 +390,60 @@
 
 <hr>
 ### Misc
-### Structure of the project <a id="structure"></a>
-In the Main class, our static final session factory is built.
-The reference to it we give to [CountriesDaoImplementation], 
-which is class that implements all database interactions:
+#### Structure of the project <a id="structure"></a>
+Our final session factory is built upon 
+creation in [CountriesDaoImplementation] interfaced through
+[CountriesDao].
+[CountriesDaoImplementation] is created in [Main], and
+passed through interface to [DatabaseMenuPrompter].
+[CountriesDaoImplementation] is the class that implements all database 
+interactions, that are interfaced in [CountriesDao]:
 - `save`
 - `update`
 - `delete`
 - `findCountryByCode`
 - `findAll`
 <br>
-In this class also all statistics data calculations can be found,
-which may be not the right place to be, but I decided to leave
-it here for now.
+
+Statistical calculations are done as well through interface
+[CountriesDao] and implemented in [CountriesDaoImplementation].
+Service layer can be good place to put these methods, however
+in current version it is not realized.
 <br>
-Created in [Main], [CountriesDaoImplementation] is passed then
-to our view/controller class [DatabaseMenuPrompter]. 
 The following diagram tries to explain the relationship between
 classes:
 ![structure-image](project-structure-diagram.png)
+
+<hr>
+
+#### Quick Links to files and directories <a id="links"></a>
+##### Misc
+- [Spark Blog README.md][spark-blog-readme]
+- [Soccer League Organizer Project][soccer_league_organizer]
+- [Pearson Correlation Documentation][PearsonsCorrelation]
+- [Apache math3 library on Maven][apache_math3_library]
+- [Question on Stack Overflow about correlation][stack_overflow_correlation_question]
+
+<hr>
+
+##### Directories
+- [data]
+- [resources]
+
+<hr>
+
+##### Files
+- [Worldbank H2 Database][worldbank.mv.db]
+- [Hibernate Configuration File][hibernate.cfg.xml]
+- [Hibernate Test Configuration File][hibernate-test.cfg.xml]
+- [Sample of data table print][data-table-sample.txt]
+
+<hr>
+
+##### Classes
+- [Country] 
+- [DatabaseMenuPrompter] 
+- [Prompter] 
+- [CountriesDaoImplementation] 
+- [CountriesDao] 
+- [Main] 
