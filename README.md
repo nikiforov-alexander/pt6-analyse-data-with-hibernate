@@ -391,21 +391,24 @@
 <hr>
 ### Misc
 #### Structure of the project <a id="structure"></a>
-In the Main class, our static final session factory is built.
-The reference to it we give to [CountriesDaoImplementation], 
-which is class that implements all database interactions:
+Our final session factory is built upon 
+creation in [CountriesDaoImplementation] interfaced through
+[CountriesDao].
+[CountriesDaoImplementation] is created in [Main], and
+passed through interface to [DatabaseMenuPrompter].
+[CountriesDaoImplementation] is the class that implements all database 
+interactions, that are interfaced in [CountriesDao]:
 - `save`
 - `update`
 - `delete`
 - `findCountryByCode`
 - `findAll`
 <br>
-In this class also all statistics data calculations can be found,
-which may be not the right place to be, but I decided to leave
-it here for now.
+Statistical calculations are done as well through interface
+[CountriesDao] and implemented in [CountriesDaoImplementation].
+Service layer can be good place to put these methods, however
+in current version it is not realized.
 <br>
-Created in [Main], [CountriesDaoImplementation] is passed then
-to our view/controller class [DatabaseMenuPrompter]. 
 The following diagram tries to explain the relationship between
 classes:
 ![structure-image](project-structure-diagram.png)
