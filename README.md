@@ -329,7 +329,8 @@
     by typing "null" for decimals only. For more see, 
     `editCountry()`
     in [DatabaseMenuPrompter]. Actual edit in database will be
-    done in [CountriesDaoImplementation] method `update`, like 
+    done in [CountriesDaoImplementation] method `update`, interfaced
+    through [CountriesDao] like 
     all other database interactions. Problem of wrong user inputs
     is solved at this level, when user is promted, his data is
     processed, so that it can later succesfully go to database.
