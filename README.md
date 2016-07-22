@@ -127,6 +127,8 @@
     src/main/java/com/techdegree/hibernate/controller/DatabaseMenuPrompter.java "src/main/java/com/techdegree/hibernate/controller/DatabaseMenuPrompter.java"
 [Prompter]: 
     src/main/java/com/techdegree/hibernate/controller/Prompter.java "src/main/java/com/techdegree/hibernate/controller/Prompter.java"
+[CountriesDao]: 
+    src/main/java/com/techdegree/hibernate/dao/CountriesDao.java "src/main/java/com/techdegree/hibernate/dao/CountriesDao.java"
 [CountriesDaoImplementation]: 
     src/main/java/com/techdegree/hibernate/dao/CountriesDaoImplementation.java "src/main/java/com/techdegree/hibernate/dao/CountriesDaoImplementation.java"
 [Main]: 
@@ -272,7 +274,8 @@
     missing values).
     <hr>
     The methods returning maxima and minima for both decimals are
-    situated in [CountriesDaoImplementation] method:
+    situated in [CountriesDaoImplementation] method, and interfaced
+    in [CountriesDao]:
     - `getMinimumAdultLiteracy()`
     - `getMaximumAdultLiteracy()`
     - `getMinimumInternetUsers()`
@@ -289,7 +292,8 @@
     [Stack overflow discussion][stack_overflow_correlation_question].
     <br>
     Just like with methods finding minima and maxima, I put this
-    method to `CountriesDaoImplementation` with name:
+    method to [CountriesDaoImplementation] interfaced through 
+    [CountriesDao] with name:
     - `getCorrelationCoefficient()`
     In this method at first all countries are filtered by non-null
     values for both decimals, then mapped to array of doubles 
