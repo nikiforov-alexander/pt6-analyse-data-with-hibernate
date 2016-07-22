@@ -7,7 +7,8 @@
 <hr>
 
 ### Misc
-### [Structure of the project] (#structure)
+#### [Structure of the project] (#structure)
+#### [Quick Links to files and directories] (#links)
 
 ### Tasks
 * [1.] (#task-1) 
@@ -379,7 +380,7 @@
 
 <hr>
 ### Misc
-### Structure of the project <a id="structure"></a>
+#### Structure of the project <a id="structure"></a>
 In the Main class, our static final session factory is built.
 The reference to it we give to [CountriesDaoImplementation], 
 which is class that implements all database interactions:
@@ -398,3 +399,29 @@ to our view/controller class [DatabaseMenuPrompter].
 The following diagram tries to explain the relationship between
 classes:
 ![structure-image](project-structure-diagram.png)
+
+#### Quick Links to files and directories <a id="links"></a>
+##### Misc
+- [Spark Blog README.md][spark-blog-readme]
+- [Soccer League Organizer Project][soccer_league_organizer]
+- [Pearson Correlation Documentation][PearsonsCorrelation]
+- [Apache math3 library on Maven][apache_math3_library]
+- [Question on Stack Overflow about correlation][stack_overflow_correlation_question]
+
+##### Directories
+- [data]
+- [resources]
+
+##### Files
+- [Worldbank H2 Database][worldbank.mv.db]
+- [Hibernate Configuration File][hibernate.cfg.xml]
+- [Hibernate Test Configuration File][hibernate-test.cfg.xml]
+- [Sample of data table print][data-table-sample.txt]
+
+##### Classes
+- [Country] 
+- [DatabaseMenuPrompter] 
+- [Prompter] 
+- [CountriesDaoImplementation] 
+- [CountriesDao] 
+- [Main] 
