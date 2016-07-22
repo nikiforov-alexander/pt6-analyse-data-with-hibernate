@@ -349,7 +349,8 @@
     by typing "null" for decimals only. For more see, 
     `addNewCountry()`
     in [DatabaseMenuPrompter]. Actual add to database is
-    done in [CountriesDaoImplementation] method `save`, like 
+    done in [CountriesDaoImplementation] method `save`, 
+    interfaced through [CountriesDao], like 
     all other database interactions. Problem of wrong user inputs
     is solved at this level, when user is promted, his data is
     processed, so that it can later succesfully go to database.
@@ -366,7 +367,8 @@
     Upon successful deletion, success message is printed. 
     For more see `deleteCountryByCode()`
     in [DatabaseMenuPrompter]. Actual delete in database is
-    done in [CountriesDaoImplementation] method `delete`, like 
+    done in [CountriesDaoImplementation] method `delete`, 
+    interfaced through [CountriesDao], like 
     all other database interactions.
 <hr>
 ### Extra Credit
