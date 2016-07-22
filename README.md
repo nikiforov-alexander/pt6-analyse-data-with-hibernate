@@ -8,8 +8,9 @@
 <hr>
 
 ### Misc
-#### [Structure of the project] (#structure)
-#### [Quick Links to files and directories] (#links)
+- [Structure of the project] (#structure)
+- [Quick Links to files and directories] (#links)
+
 <hr>
 
 ### Tasks
@@ -409,17 +410,23 @@ classes:
 - [Pearson Correlation Documentation][PearsonsCorrelation]
 - [Apache math3 library on Maven][apache_math3_library]
 - [Question on Stack Overflow about correlation][stack_overflow_correlation_question]
+
 <hr>
+
 ##### Directories
 - [data]
 - [resources]
+
 <hr>
+
 ##### Files
 - [Worldbank H2 Database][worldbank.mv.db]
 - [Hibernate Configuration File][hibernate.cfg.xml]
 - [Hibernate Test Configuration File][hibernate-test.cfg.xml]
 - [Sample of data table print][data-table-sample.txt]
+
 <hr>
+
 ##### Classes
 - [Country] 
 - [DatabaseMenuPrompter] 
