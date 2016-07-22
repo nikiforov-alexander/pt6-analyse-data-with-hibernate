@@ -402,7 +402,9 @@ to our view/controller class [DatabaseMenuPrompter].
 The following diagram tries to explain the relationship between
 classes:
 ![structure-image](project-structure-diagram.png)
+
 <hr>
+
 #### Quick Links to files and directories <a id="links"></a>
 ##### Misc
 - [Spark Blog README.md][spark-blog-readme]
