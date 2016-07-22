@@ -404,6 +404,7 @@ interactions, that are interfaced in [CountriesDao]:
 - `findCountryByCode`
 - `findAll`
 <br>
+
 Statistical calculations are done as well through interface
 [CountriesDao] and implemented in [CountriesDaoImplementation].
 Service layer can be good place to put these methods, however
