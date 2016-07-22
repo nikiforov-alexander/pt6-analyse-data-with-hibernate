@@ -4,11 +4,13 @@
 ### Table of Contents
 ### Installation instructions
 * [Eclipse installation instructions.] (#eclipse)
+
 <hr>
 
 ### Misc
 #### [Structure of the project] (#structure)
 #### [Quick Links to files and directories] (#links)
+<hr>
 
 ### Tasks
 * [1.] (#task-1) 
@@ -399,7 +401,7 @@ to our view/controller class [DatabaseMenuPrompter].
 The following diagram tries to explain the relationship between
 classes:
 ![structure-image](project-structure-diagram.png)
-
+<hr>
 #### Quick Links to files and directories <a id="links"></a>
 ##### Misc
 - [Spark Blog README.md][spark-blog-readme]
@@ -407,17 +409,17 @@ classes:
 - [Pearson Correlation Documentation][PearsonsCorrelation]
 - [Apache math3 library on Maven][apache_math3_library]
 - [Question on Stack Overflow about correlation][stack_overflow_correlation_question]
-
+<hr>
 ##### Directories
 - [data]
 - [resources]
-
+<hr>
 ##### Files
 - [Worldbank H2 Database][worldbank.mv.db]
 - [Hibernate Configuration File][hibernate.cfg.xml]
 - [Hibernate Test Configuration File][hibernate-test.cfg.xml]
 - [Sample of data table print][data-table-sample.txt]
-
+<hr>
 ##### Classes
 - [Country] 
 - [DatabaseMenuPrompter] 
