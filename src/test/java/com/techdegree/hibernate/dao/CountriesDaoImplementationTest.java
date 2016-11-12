@@ -160,6 +160,14 @@ public class CountriesDaoImplementationTest {
     @Test
     public void allStatMethodsExceptCorrCoefficientMethodReturnNullWithEmptyDao()
             throws Exception {
+        // Given empty db and DAO
+        // When we get
+        // - MinimumAdultLiteracy
+        // - MaximumAdultLiteracy
+        // - MinimumInternetUsers
+        // - MaximumInternetUsers
+        // Then null should be returned
+
         assertThat(
                 countriesDao.getMinimumAdultLiteracy()
         ).isNull();
@@ -174,4 +182,6 @@ public class CountriesDaoImplementationTest {
                 countriesDao.getMaximumInternetUsers()
         ).isNull();
     }
+
+
 }
