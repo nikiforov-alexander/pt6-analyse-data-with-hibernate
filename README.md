@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/nikiforov-alexander/pt6-analyse-data-with-hibernate.svg?branch=master)](https://travis-ci.org/nikiforov-alexander/pt6-analyse-data-with-hibernate)
+[![codecov](https://codecov.io/gh/nikiforov-alexander/pt6-analyse-data-with-hibernate/branch/master/graph/badge.svg)](https://codecov.io/gh/nikiforov-alexander/pt6-analyse-data-with-hibernate)
 
 ## Techdegree project 6
 ### Analyze Public Data With Hibernate
