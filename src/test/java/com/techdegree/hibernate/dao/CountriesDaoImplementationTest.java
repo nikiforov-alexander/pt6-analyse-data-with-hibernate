@@ -12,10 +12,13 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CountriesDaoImplementationTest {
+
     // test configuration file
     private static final String TEST_CONFIGURATION_FILE = "hibernate-test.cfg.xml";
+
     // Dao with all CRUDs we test
-    private CountriesDaoImplementation mCountriesDaoImplementation;
+    private CountriesDao countriesDao;
+
     // Test country with ABC code
     private Country mTestCountryWithAbcCode;
 
@@ -23,13 +26,13 @@ public class CountriesDaoImplementationTest {
     @Before
     public void setUp() throws Exception {
        // setting up DAO with our session factory
-       mCountriesDaoImplementation = new
+       countriesDao = new
                CountriesDaoImplementation(TEST_CONFIGURATION_FILE);
     }
     // and after each test we close session factory
     @After
     public void tearDown() throws Exception {
-        mCountriesDaoImplementation.close();
+        countriesDao.close();
     }
 
     private void addTestCountryToDatabase() {
@@ -38,7 +41,7 @@ public class CountriesDaoImplementationTest {
                 .withAdultLiteracyRate(null)
                 .withInternetUsers(1.0)
                 .build();
-       mCountriesDaoImplementation.save(mTestCountryWithAbcCode);
+       countriesDao.save(mTestCountryWithAbcCode);
     }
 
     @Test
@@ -48,7 +51,7 @@ public class CountriesDaoImplementationTest {
 
         // When we fetch all countries
         List<Country> listOfAllCountries =
-                mCountriesDaoImplementation.findAll();
+                countriesDao.findAll();
 
         // Then size of list should be one
         assertThat(listOfAllCountries.size())
@@ -64,7 +67,7 @@ public class CountriesDaoImplementationTest {
                 .withInternetUsers(1.0)
                 .build();
         // When we save a country
-        String codeFromSave = mCountriesDaoImplementation
+        String codeFromSave = countriesDao
                 .save(testCountryWithAbcCode);
         // Then code of country should be returned
         assertThat(codeFromSave).isEqualTo("ABC");
@@ -76,7 +79,7 @@ public class CountriesDaoImplementationTest {
         addTestCountryToDatabase();
 
         // When we try to find country by code
-        Country foundCountry = mCountriesDaoImplementation
+        Country foundCountry = countriesDao
                 .findCountryByCode("ABC");
 
         // Then obtained country should be equal to our test country
@@ -92,12 +95,12 @@ public class CountriesDaoImplementationTest {
 
         // When we set new name and update database
         mTestCountryWithAbcCode.setName("New Country Name");
-        mCountriesDaoImplementation.update(mTestCountryWithAbcCode);
+        countriesDao.update(mTestCountryWithAbcCode);
 
         // Then country's name fetched from database should be equal to
         // new name
         assertThat(
-                mCountriesDaoImplementation.findCountryByCode("ABC")
+                countriesDao.findCountryByCode("ABC")
                 )
                 .hasFieldOrPropertyWithValue("name", "New Country Name");
     }
@@ -108,11 +111,11 @@ public class CountriesDaoImplementationTest {
         addTestCountryToDatabase();
 
         // When we delete only entry from database
-        mCountriesDaoImplementation.delete(mTestCountryWithAbcCode);
+        countriesDao.delete(mTestCountryWithAbcCode);
 
         // Then size of the list of all countries should be zero
         assertThat(
-                mCountriesDaoImplementation.findAll().size()
+                countriesDao.findAll().size()
         ).isEqualTo(0);
     }
 
@@ -130,7 +133,7 @@ public class CountriesDaoImplementationTest {
                 .withInternetUsers(null)
                 .build();
 
-        mCountriesDaoImplementation.save(country);
+        countriesDao.save(country);
         // Then DataException is thrown
     }
 
@@ -146,11 +149,11 @@ public class CountriesDaoImplementationTest {
                 .withAdultLiteracyRate(123.4567890123345)
                 .withInternetUsers(null)
                 .build();
-        mCountriesDaoImplementation.save(country);
+        countriesDao.save(country);
 
         // Then these decimals are accepted by truncating
         assertThat(
-                mCountriesDaoImplementation.findAll().size()
+                countriesDao.findAll().size()
         ).isEqualTo(1);
     }
 }
