@@ -2,6 +2,7 @@ package com.techdegree.hibernate.dao;
 
 import com.techdegree.hibernate.model.Country;
 import com.techdegree.hibernate.model.Country.CountryBuilder;
+import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.hibernate.exception.DataException;
 import org.junit.After;
 import org.junit.Before;
@@ -158,7 +159,7 @@ public class CountriesDaoImplementationTest {
     }
 
     @Test
-    public void allStatMethodsExceptCorrCoefficientMethodReturnNullWithEmptyDao()
+    public void allStatMethodsReturnNullWithEmptyDao()
             throws Exception {
         // Given empty db and DAO
         // When we get
@@ -166,6 +167,7 @@ public class CountriesDaoImplementationTest {
         // - MaximumAdultLiteracy
         // - MinimumInternetUsers
         // - MaximumInternetUsers
+        // - CorrelationCoefficient
         // Then null should be returned
 
         assertThat(
@@ -181,7 +183,9 @@ public class CountriesDaoImplementationTest {
         assertThat(
                 countriesDao.getMaximumInternetUsers()
         ).isNull();
+
+        assertThat(
+                countriesDao.getCorrelationCoefficient()
+        ).isNull();
     }
-
-
 }
