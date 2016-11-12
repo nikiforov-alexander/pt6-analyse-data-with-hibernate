@@ -156,4 +156,22 @@ public class CountriesDaoImplementationTest {
                 countriesDao.findAll().size()
         ).isEqualTo(1);
     }
+
+    @Test
+    public void allStatMethodsExceptCorrCoefficientMethodReturnNullWithEmptyDao()
+            throws Exception {
+        assertThat(
+                countriesDao.getMinimumAdultLiteracy()
+        ).isNull();
+        assertThat(
+                countriesDao.getMaximumAdultLiteracy()
+        ).isNull();
+
+        assertThat(
+                countriesDao.getMinimumInternetUsers()
+        ).isNull();
+        assertThat(
+                countriesDao.getMaximumInternetUsers()
+        ).isNull();
+    }
 }
