@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/nikiforov-alexander/pt6-analyse-data-with-hibernate.svg?branch=master)](https://travis-ci.org/nikiforov-alexander/pt6-analyse-data-with-hibernate)
+
 ## Techdegree project 6
 ### Analyze Public Data With Hibernate
 <hr>
