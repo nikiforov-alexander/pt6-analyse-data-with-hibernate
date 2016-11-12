@@ -2,19 +2,14 @@ package com.techdegree.hibernate.dao;
 
 import com.techdegree.hibernate.model.Country;
 import com.techdegree.hibernate.model.Country.CountryBuilder;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.service.ServiceRegistry;
+import org.hibernate.exception.DataException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-
-import org.hibernate.exception.DataException;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CountriesDaoImplementationTest {
     // test configuration file
@@ -45,15 +40,19 @@ public class CountriesDaoImplementationTest {
                 .build();
        mCountriesDaoImplementation.save(mTestCountryWithAbcCode);
     }
+
     @Test
     public void findAllReturnsOneTestCountryWhenWeAddIt() throws Exception {
         // Given database with one country
         addTestCountryToDatabase();
+
         // When we fetch all countries
         List<Country> listOfAllCountries =
                 mCountriesDaoImplementation.findAll();
+
         // Then size of list should be one
-        assertEquals(1, listOfAllCountries.size());
+        assertThat(listOfAllCountries.size())
+                .isEqualTo(1);
     }
 
     @Test
@@ -68,44 +67,53 @@ public class CountriesDaoImplementationTest {
         String codeFromSave = mCountriesDaoImplementation
                 .save(testCountryWithAbcCode);
         // Then code of country should be returned
-        assertEquals("ABC", codeFromSave);
+        assertThat(codeFromSave).isEqualTo("ABC");
     }
 
     @Test
     public void getCountryByCodeReturnsCorrectCountry() throws Exception {
         // Given testing database with ABC country
         addTestCountryToDatabase();
+
         // When we try to find country by code
         Country foundCountry = mCountriesDaoImplementation
                 .findCountryByCode("ABC");
+
         // Then obtained country should be equal to our test country
-        assertEquals(mTestCountryWithAbcCode, foundCountry);
+        assertThat(mTestCountryWithAbcCode)
+                .isEqualTo(foundCountry);
     }
 
     @Test
     public void updateCountryByChangingCodeUpdatesTheCountry() throws Exception {
+
         // Given testing database with ABC country,
         addTestCountryToDatabase();
+
         // When we set new name and update database
         mTestCountryWithAbcCode.setName("New Country Name");
         mCountriesDaoImplementation.update(mTestCountryWithAbcCode);
+
         // Then country's name fetched from database should be equal to
         // new name
-        Country testCountryFromDataBase =
-                mCountriesDaoImplementation.findCountryByCode("ABC");
-        assertEquals("New Country Name", testCountryFromDataBase.getName());
+        assertThat(
+                mCountriesDaoImplementation.findCountryByCode("ABC")
+                )
+                .hasFieldOrPropertyWithValue("name", "New Country Name");
     }
 
     @Test
     public void deleteCountrySetsSizeToZero() throws Exception {
         // Given testing database with ABC country
         addTestCountryToDatabase();
+
         // When we delete only entry from database
         mCountriesDaoImplementation.delete(mTestCountryWithAbcCode);
+
         // Then size of the list of all countries should be zero
-        int sizeOfListOfCountriesInDataBase =
-                mCountriesDaoImplementation.findAll().size();
-        assertEquals(0, sizeOfListOfCountriesInDataBase);
+        assertThat(
+                mCountriesDaoImplementation.findAll().size()
+        ).isEqualTo(0);
     }
 
     @Test(expected = DataException.class)
@@ -113,12 +121,15 @@ public class CountriesDaoImplementationTest {
     decimalsWithMoreThanThreeNumberInIntegerPartWithoutTrailingZerosAreNotAcceptedByDatabaseSave()
             throws Exception {
         // Given testing database with no countries
+
         // When we add decimal with 4 numbers in integer part
+        // and save country
         Country country = new Country.CountryBuilder("ABC")
                 .withName("Country")
                 .withAdultLiteracyRate(1234.)
                 .withInternetUsers(null)
                 .build();
+
         mCountriesDaoImplementation.save(country);
         // Then DataException is thrown
     }
@@ -127,6 +138,7 @@ public class CountriesDaoImplementationTest {
     public void decimalsWithRightIntegerPartAndManyDecimalNumbersAreAcceptedBySave()
             throws Exception {
         // Given testing database with no countries
+
         // When we add decimal with 3 numbers in integer part, and more than
         // eight numbers in fractional part
         Country country = new Country.CountryBuilder("ABC")
@@ -135,7 +147,10 @@ public class CountriesDaoImplementationTest {
                 .withInternetUsers(null)
                 .build();
         mCountriesDaoImplementation.save(country);
+
         // Then these decimals are accepted by truncating
-        assertEquals(1, mCountriesDaoImplementation.findAll().size());
+        assertThat(
+                mCountriesDaoImplementation.findAll().size()
+        ).isEqualTo(1);
     }
 }
