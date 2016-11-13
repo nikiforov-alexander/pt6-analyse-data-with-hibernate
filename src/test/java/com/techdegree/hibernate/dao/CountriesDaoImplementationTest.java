@@ -171,17 +171,29 @@ public class CountriesDaoImplementationTest {
         // Then null should be returned
 
         assertThat(
-                countriesDao.getMinimumAdultLiteracy()
+                countriesDao.getMinimumValueFor(
+                        Country::getAdultLiteracyRate,
+                        country -> country.getAdultLiteracyRate() != null
+                )
         ).isNull();
         assertThat(
-                countriesDao.getMaximumAdultLiteracy()
+                countriesDao.getMaximumValueFor(
+                        Country::getAdultLiteracyRate,
+                        country -> country.getAdultLiteracyRate() != null
+                )
         ).isNull();
 
         assertThat(
-                countriesDao.getMinimumInternetUsers()
+                countriesDao.getMinimumValueFor(
+                        Country::getInternetUsers,
+                        country -> country.getInternetUsers() != null
+                )
         ).isNull();
         assertThat(
-                countriesDao.getMaximumInternetUsers()
+                countriesDao.getMaximumValueFor(
+                        Country::getInternetUsers,
+                        country -> country.getInternetUsers() != null
+                )
         ).isNull();
 
         assertThat(
