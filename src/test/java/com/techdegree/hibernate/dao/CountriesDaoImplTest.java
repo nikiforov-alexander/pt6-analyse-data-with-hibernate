@@ -2,7 +2,6 @@ package com.techdegree.hibernate.dao;
 
 import com.techdegree.hibernate.model.Country;
 import com.techdegree.hibernate.model.Country.CountryBuilder;
-import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.hibernate.exception.DataException;
 import org.junit.After;
 import org.junit.Before;
@@ -12,7 +11,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CountriesDaoImplementationTest {
+public class CountriesDaoImplTest {
 
     // test configuration file
     private static final String TEST_CONFIGURATION_FILE = "hibernate-test.cfg.xml";
