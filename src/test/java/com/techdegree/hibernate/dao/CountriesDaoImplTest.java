@@ -170,33 +170,67 @@ public class CountriesDaoImplTest {
         // Then null should be returned
 
         assertThat(
-                countriesDao.getMinimumValueFor(
-                        Country::getAdultLiteracyRate,
-                        country -> country.getAdultLiteracyRate() != null
-                )
+                countriesDao.getMinimumAdultLiteracy()
         ).isNull();
         assertThat(
-                countriesDao.getMaximumValueFor(
-                        Country::getAdultLiteracyRate,
-                        country -> country.getAdultLiteracyRate() != null
-                )
+                countriesDao.getMinimumAdultLiteracy()
         ).isNull();
 
         assertThat(
-                countriesDao.getMinimumValueFor(
-                        Country::getInternetUsers,
-                        country -> country.getInternetUsers() != null
-                )
+                countriesDao.getMinimumInternetUsers()
         ).isNull();
         assertThat(
-                countriesDao.getMaximumValueFor(
-                        Country::getInternetUsers,
-                        country -> country.getInternetUsers() != null
-                )
+                countriesDao.getMaximumInternetUsers()
         ).isNull();
 
         assertThat(
                 countriesDao.getCorrelationCoefficient()
         ).isNull();
+    }
+
+    @Test
+    public void properMinAndMaxValuesAreReturnedForAdultLiteracyAndInternetUsers()
+            throws Exception {
+        // Given dao with three countries that have
+        // 1.00 as adultLiteracy, and internetUsers
+        // null as adultLiteracy, and internetUsers
+        // 2.00 as adultLiteracy, and internetUsers
+        Country firstCountry =
+                new Country.CountryBuilder("AAA")
+                .withAdultLiteracyRate(1.00)
+                .withInternetUsers(1.00)
+                .withName("first country")
+                .build();
+        Country secondCountry =
+                new Country.CountryBuilder("BBB")
+                        .withAdultLiteracyRate(null)
+                        .withInternetUsers(null)
+                        .withName("second country")
+                        .build();
+        Country thirdCountry =
+                new Country.CountryBuilder("CCC")
+                        .withAdultLiteracyRate(2.0)
+                        .withInternetUsers(2.0)
+                        .withName("second country")
+                        .build();
+        countriesDao.save(firstCountry);
+        countriesDao.save(secondCountry);
+        countriesDao.save(thirdCountry);
+
+        // When we get minimum adultLiteracyRate and internetUsers
+        // Then min adultLiteracyRate and internetUsers should be 1.0
+        // and max adultLiteracyRate and internetUsers should be 2.0
+        assertThat(
+                countriesDao.getMinimumAdultLiteracy()
+        ).isEqualTo(1.00);
+        assertThat(
+                countriesDao.getMaximumAdultLiteracy()
+        ).isEqualTo(2.00);
+        assertThat(
+                countriesDao.getMinimumInternetUsers()
+        ).isEqualTo(1.00);
+        assertThat(
+                countriesDao.getMaximumInternetUsers()
+        ).isEqualTo(2.00);
     }
 }
