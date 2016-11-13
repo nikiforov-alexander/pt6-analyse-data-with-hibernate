@@ -11,7 +11,8 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 
 import java.util.List;
-import java.util.OptionalDouble;
+import java.util.Optional;
+import java.util.function.*;
 
 public class CountriesDaoImplementation implements CountriesDao {
     // final session factory
@@ -106,61 +107,133 @@ public class CountriesDaoImplementation implements CountriesDao {
         session.close();
     }
 
-    // The rest 5 methods are used to calculate statistics, they are subject
-    // to be moved to other layer, because this is database access layer
-    // but for now I'll leave them here, to have working prototype
+    /**
+     * finds minimum value from all countries {@code findAll}
+     * method, using Java 8 Functional Interfaces and streams.
+     * It is private, but is used in all simple getters, see
+     * below, to hide complexity for user. It is just like
+     * its brother @see #getMaximumValueFor, but I don't know how
+     * to generalize them.
+     * @param countryPropertyGetterFunction : this is function that
+     *                                      is simply getter of the parameter
+     *                                      minimum of which we seek
+     * @param countryFilterPredicate : this is filter, checking that getter
+     *                               values are not {@code null}. It is constant
+     *                               for all methods, but I don't know how
+     *                               to generalize it.
+     * @return minimum {@code Double} value, or {@code null} otherwise
+     */
+    private Double getMinimumValueFor(
+            Function<Country, Double> countryPropertyGetterFunction,
+            Predicate<Country> countryFilterPredicate
+    ) {
+        Optional minimum = findAll()
+                .stream()
+                .filter(
+                        countryFilterPredicate
+                )
+                .map(
+                        countryPropertyGetterFunction
+                )
+                .min(Double::compareTo);
+        if (minimum.isPresent()) {
+            return (Double) minimum.get();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * finds maximum value from all countries {@code findAll}
+     * method, using Java 8 Functional Interfaces and streams.
+     * It is private, but is used in all simple getters, see
+     * below, to hide complexity for user. It is just like
+     * its brother @see #getMinimumValueFor, but I don't know how
+     * to generalize them.
+     * @param countryPropertyGetterFunction : this is function that
+     *                                      is simply getter of the parameter
+     *                                      minimum of which we seek
+     * @param countryFilterPredicate : this is filter, checking that getter
+     *                               values are not {@code null}. It is constant
+     *                               for all methods, but I don't know how
+     *                               to generalize it.
+     * @return maximum {@code Double} value, or {@code null} otherwise
+     */
+    private Double getMaximumValueFor(
+            Function<Country, Double> countryPropertyGetterFunction,
+            Predicate<Country> countryFilterPredicate
+    ) {
+        Optional maximum = findAll()
+                .stream()
+                .filter(countryFilterPredicate)
+                .map(
+                        countryPropertyGetterFunction
+                )
+                .max(Double::compareTo);
+        if (maximum.isPresent()) {
+            return (Double) maximum.get();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * gets minimum adult literacy rate, re-uses generic
+     * @see #getMinimumValueFor(Function, Predicate) method.
+     * @return {@code Double} minimum adult literacy rate or
+     * {@code null}
+     */
     @Override
     public Double getMinimumAdultLiteracy() {
-        OptionalDouble minimumAdultLiteracyRate = findAll()
-                .stream()
-                .filter(country -> country.getAdultLiteracyRate() != null)
-                .mapToDouble(Country::getAdultLiteracyRate)
-                .min();
-        if (minimumAdultLiteracyRate.isPresent()) {
-            return minimumAdultLiteracyRate.getAsDouble();
-        } else {
-            return null;
-        }
+        return getMinimumValueFor(
+                Country::getAdultLiteracyRate,
+                country -> country.getAdultLiteracyRate() != null
+        );
     }
+
+    /**
+     * gets maximum adult literacy rate, re-uses generic
+     * @see #getMaximumValueFor(Function, Predicate) method.
+     * @return {@code Double} maximum adult literacy rate or
+     * {@code null}
+     */
     @Override
     public Double getMaximumAdultLiteracy() {
-        OptionalDouble maximumAdultLiteracyRate = findAll()
-                .stream()
-                .filter(country -> country.getAdultLiteracyRate() != null)
-                .mapToDouble(Country::getAdultLiteracyRate)
-                .max();
-        if (maximumAdultLiteracyRate.isPresent()) {
-            return maximumAdultLiteracyRate.getAsDouble();
-        } else {
-            return null;
-        }
+        return getMaximumValueFor(
+                Country::getAdultLiteracyRate,
+                country -> country.getAdultLiteracyRate() != null
+        );
     }
+
+    /**
+     * gets minimum internet users, re-uses generic
+     * @see #getMinimumValueFor(Function, Predicate) method.
+     * @return {@code Double} minimum internet users or
+     * {@code null}
+     */
     @Override
     public Double getMinimumInternetUsers() {
-        OptionalDouble minimumInternetUsers = findAll()
-                .stream()
-                .filter(country -> country.getInternetUsers() != null)
-                .mapToDouble(Country::getInternetUsers)
-                .min();
-        if (minimumInternetUsers.isPresent()) {
-            return minimumInternetUsers.getAsDouble();
-        } else {
-            return null;
-        }
+        return getMinimumValueFor(
+                Country::getInternetUsers,
+                country -> country.getInternetUsers() != null
+        );
     }
+
+    /**
+     * gets maximum internet users, re-uses generic
+     * @see #getMaximumValueFor(Function, Predicate) method.
+     * @return {@code Double} maximum internet users or
+     * {@code null}
+     */
     @Override
     public Double getMaximumInternetUsers() {
-        OptionalDouble maximumInternetUsers = findAll()
-                .stream()
-                .filter(country -> country.getInternetUsers() != null)
-                .mapToDouble(Country::getInternetUsers)
-                .max();
-        if (maximumInternetUsers.isPresent()) {
-            return maximumInternetUsers.getAsDouble();
-        } else {
-            return null;
-        }
+        return getMaximumValueFor(
+                Country::getInternetUsers,
+                country -> country.getInternetUsers() != null
+        );
     }
+
+
     // get correlation coefficient using apache.math library and
     // PearsonsCorrelation method.
     @Override
