@@ -2,6 +2,7 @@ package com.techdegree.hibernate.dao;
 
 import com.techdegree.hibernate.model.Country;
 import com.techdegree.hibernate.model.Country.CountryBuilder;
+import org.assertj.core.data.Percentage;
 import org.hibernate.exception.DataException;
 import org.junit.After;
 import org.junit.Before;
@@ -188,19 +189,23 @@ public class CountriesDaoImplTest {
         ).isNull();
     }
 
-    @Test
-    public void properMinAndMaxValuesAreReturnedForAdultLiteracyAndInternetUsers()
-            throws Exception {
-        // Given dao with three countries that have
-        // 1.00 as adultLiteracy, and internetUsers
-        // null as adultLiteracy, and internetUsers
-        // 2.00 as adultLiteracy, and internetUsers
+    // statistics tests
+
+    /**
+     * fills dao with three countries that are perfectly
+     * correlated:
+     * code : "AAA", "BBB", "CCC",
+     * adult literacy rate : 1.00, null, 3.00
+     * name : "first country", "second country" , "third country"
+     * internet users : 10.00, null, 20.00
+     */
+    private void fillDaoWithThreePerfectlyCorrelatedCountries() {
         Country firstCountry =
                 new Country.CountryBuilder("AAA")
-                .withAdultLiteracyRate(1.00)
-                .withInternetUsers(1.00)
-                .withName("first country")
-                .build();
+                        .withAdultLiteracyRate(1.00)
+                        .withInternetUsers(10.00)
+                        .withName("first country")
+                        .build();
         Country secondCountry =
                 new Country.CountryBuilder("BBB")
                         .withAdultLiteracyRate(null)
@@ -210,27 +215,73 @@ public class CountriesDaoImplTest {
         Country thirdCountry =
                 new Country.CountryBuilder("CCC")
                         .withAdultLiteracyRate(2.0)
-                        .withInternetUsers(2.0)
+                        .withInternetUsers(20.0)
                         .withName("second country")
                         .build();
         countriesDao.save(firstCountry);
         countriesDao.save(secondCountry);
         countriesDao.save(thirdCountry);
+    }
+
+    @Test
+    public void properMinValuesAreReturnedForAdultLiteracyAndInternetUsers()
+            throws Exception {
+        // Given dao with three countries that have
+        // 1.00 as adultLiteracy, and 10.00 internetUsers
+        // null as adultLiteracy, and null internetUsers
+        // 2.00 as adultLiteracy, and 20.00 internetUsers
+        fillDaoWithThreePerfectlyCorrelatedCountries();
+
+        // When we get minimum adultLiteracyRate and internetUsers
+        // Then min adultLiteracyRate and internetUsers should be
+        // 1.0 and 10.00
+        assertThat(
+                countriesDao.getMinimumAdultLiteracy()
+        ).isEqualTo(1.00);
+        assertThat(
+                countriesDao.getMinimumInternetUsers()
+        ).isEqualTo(10.00);
+    }
+
+    @Test
+    public void properMaxValuesAreReturnedForAdultLiteracyAndInternetUsers()
+            throws Exception {
+        // Given dao with three countries that have
+        // 1.00 as adultLiteracy, and 10.00 internetUsers
+        // null as adultLiteracy, and null internetUsers
+        // 2.00 as adultLiteracy, and 20.00 internetUsers
+        fillDaoWithThreePerfectlyCorrelatedCountries();
 
         // When we get minimum adultLiteracyRate and internetUsers
         // Then min adultLiteracyRate and internetUsers should be 1.0
         // and max adultLiteracyRate and internetUsers should be 2.0
         assertThat(
-                countriesDao.getMinimumAdultLiteracy()
-        ).isEqualTo(1.00);
-        assertThat(
                 countriesDao.getMaximumAdultLiteracy()
         ).isEqualTo(2.00);
         assertThat(
-                countriesDao.getMinimumInternetUsers()
-        ).isEqualTo(1.00);
-        assertThat(
                 countriesDao.getMaximumInternetUsers()
-        ).isEqualTo(2.00);
+        ).isEqualTo(20.00);
+
+        assertThat(
+                countriesDao.getCorrelationCoefficient()
+        ).isCloseTo(1.0, Percentage.withPercentage(10.00));
+    }
+
+    @Test
+    public void correlationCoefficientIsCloseToOneForPerfectlyCorrelatedCountries()
+            throws Exception {
+        // Given dao with three countries that have
+        // 1.00 as adultLiteracy, and 10.00 internetUsers
+        // null as adultLiteracy, and null internetUsers
+        // 2.00 as adultLiteracy, and 20.00 internetUsers
+        fillDaoWithThreePerfectlyCorrelatedCountries();
+
+        // When we get correlation coefficient
+        // Then it should be close to 1.0
+        assertThat(
+                countriesDao.getCorrelationCoefficient()
+        ).isCloseTo(
+                1.0, Percentage.withPercentage(1.00)
+        );
     }
 }
